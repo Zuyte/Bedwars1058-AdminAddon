@@ -74,7 +74,7 @@ public class PlayerListener implements Listener {
     public void ClickEvent(PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             try {
-                if (e.hasItem() == true) {
+                if (e.hasItem()) {
                     if (e.getItem().getType() == Material.STICK) {
                         if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Magic Toy Stick") && e.getPlayer().getItemInHand().containsEnchantment(Enchantment.LURE)) {
                             Block clickedBlock = e.getClickedBlock();

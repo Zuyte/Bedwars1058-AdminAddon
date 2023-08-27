@@ -50,9 +50,7 @@ public class AdminTabComplete implements TabCompleter {
                 List arenaGroupsList = Admin.bw.getConfigs().getMainConfig().getYml().getStringList(".arenaGroups");
                 String[] arenaGroups = new String[arenaGroupsList.size()];
                 arenaGroupsList.toArray(arenaGroups);
-                for (int h = 0; h < arenaGroupsList.size(); h++) {
-                    arenaNames.add(arenaGroups[h]);
-                }
+                arenaNames.addAll(Arrays.asList(arenaGroups).subList(0, arenaGroupsList.size()));
                     IArena[] arenas = new IArena[Admin.getInstance().bw.getArenaUtil().getArenas().size()];
                     Admin.getInstance().bw.getArenaUtil().getArenas().toArray(arenas);
 

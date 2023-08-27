@@ -5,13 +5,20 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.NextEvent;
 import me.zuyte.admin.Admin;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class NextEventSubCommand {
     BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    public NextEventSubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
 
-public void player(Player p, String[] args) {
+private void player(Player p, String[] args) {
             if (!p.hasPermission("bw.admin.nextevent")) {
                 p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
                 return;
@@ -45,7 +52,7 @@ public void player(Player p, String[] args) {
             p.sendMessage(ChatColor.RED + "Usage: /bw nextevent <arena> <event>");
         }
 
-        public void console(ConsoleCommandSender c, String[] args) {
+        private void console(ConsoleCommandSender c, String[] args) {
             if (args.length > 1) {
                 if (arenaUtil.getArenaByName(args[1]) == null) {
                     c.sendMessage(ChatColor.RED + "Arena not found");

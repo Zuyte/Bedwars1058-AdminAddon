@@ -5,14 +5,20 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import me.zuyte.admin.Admin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class ForceJoinSubCommand {
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
-public void player(Player p, String[] args) {
+    public ForceJoinSubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
+    private void player(Player p, String[] args) {
             if (!p.hasPermission("bw.admin.forcejoin")) {
                 p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
                 return;
@@ -49,7 +55,7 @@ public void player(Player p, String[] args) {
             }
                 p.sendMessage(ChatColor.RED + "Usage: /bw forcejoin <player> <arena>");
         }
-    public void console(ConsoleCommandSender c, String[] args) {
+    private void console(ConsoleCommandSender c, String[] args) {
             if (args.length > 1) {
                 Player player = Bukkit.getPlayerExact(args[1]);
                 if (player == null) {

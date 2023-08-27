@@ -10,14 +10,21 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class SetBedSubCommand {
 
     BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    public SetBedSubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
 
-    public void player(Player p, String[] args) {
+    private void player(Player p, String[] args) {
             if (!p.hasPermission("bw.admin.setbed")) {
         p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
         return;
@@ -52,7 +59,7 @@ public class SetBedSubCommand {
             p.sendMessage(ChatColor.RED + "Usage: /bw setbed <player> <true ┃ false>");
         }
 
-        public void console(ConsoleCommandSender c, String[] args) {
+        private void console(ConsoleCommandSender c, String[] args) {
             if (args.length > 1) {
                 Player player = Bukkit.getPlayerExact(args[1]);
                 if (player == null) {

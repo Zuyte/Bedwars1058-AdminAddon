@@ -18,7 +18,7 @@ import java.util.Map;
 
 public final class Admin extends JavaPlugin {
 
-    private Admin instance;
+    private static Admin instance;
     private boolean isBedWarsProxy = false;
     public BedWars bw;
     @Override
@@ -56,7 +56,7 @@ public final class Admin extends JavaPlugin {
         getCommand("bwa").setTabCompleter(new AdminProxyTabComplete());
     }
 
-    public Admin getInstance(){
+    public static Admin getInstance(){
         return instance;
     }
 }
