@@ -1,6 +1,8 @@
 package me.zuyte.admin.listeners;
 
 import me.zuyte.admin.Admin;
+import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.utils.ExtraUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,7 +33,7 @@ public class PlayerListener implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
             if (e.getDamager() instanceof LivingEntity) {
-                if (e.getDamager().getCustomName() == ChatColor.RED + e.getEntity().getName() + "'s Enemy") {
+                if (e.getDamager().getCustomName().equals(ChatColor.RED + e.getEntity().getName() + "'s Enemy")) {
                     e.setCancelled(false);
                 }
             }
@@ -47,24 +49,9 @@ public class PlayerListener implements Listener {
     public void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                if (Admin.getInstance().kaboom.containsKey(e.getEntity().getName())) {
+                if (Cache.containsKaboomCache((Player) e.getEntity())) {
                     e.setCancelled(true);
-                    Admin.getInstance().kaboom.remove(e.getEntity().getName());
-                }
-            }
-        }
-    }
-    @EventHandler
-    public void onInventoryInteract(PlayerInteractEvent e) {
-        if (Admin.bw.getArenaUtil().isPlaying(e.getPlayer()) && !Admin.bw.getArenaUtil().isSpectating(e.getPlayer()) && !Admin.bw.getArenaUtil().getArenaByPlayer(e.getPlayer()).isRespawning(e.getPlayer())) {
-            for (String s : Admin.getCfg().getYml().getStringList("settings.enable-crafting")) {
-                if (Admin.bw.getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName().equals(s)) {
-                    if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-                    Block b = e.getClickedBlock();
-                    if (b == null) return;
-                    if (b.getType() == Admin.bw.getVersionSupport().materialCraftingTable()) {
-                        e.setCancelled(false);
-                    }
+                    Cache.removeKaboomCache((Player) e.getEntity());
                 }
             }
         }
@@ -78,45 +65,40 @@ public class PlayerListener implements Listener {
                     if (e.getItem().getType() == Material.STICK) {
                         if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Magic Toy Stick") && e.getPlayer().getItemInHand().containsEnchantment(Enchantment.LURE)) {
                             Block clickedBlock = e.getClickedBlock();
-                            List<Block> blocks = getBlocks.put(clickedBlock.getLocation(), 4, false);
+                            List<Block> blocks = ExtraUtils.getRadiusBlocks(clickedBlock.getLocation(), 4, false);
                             for (Block block : blocks) {
                                 if (!block.getType().equals(Material.AIR) || !block.getType().equals(Material.BED_BLOCK)) {
-                                    launchBlocks.put(block);
+                                    ExtraUtils.launchBlock(block);
                                 }
                                 e.getPlayer().setItemInHand(new ItemStack(Material.AIR));
                                 Location location = e.getPlayer().getLocation();
-                                try {
-                                    e.getPlayer().setVelocity(new Vector(0, 10, 0));
-                                } catch (Exception ex) {
-                                    Admin.getInstance().getLogger().severe("An exception occurred while setting player velocity.");
-                                }
-
+                                e.getPlayer().setVelocity(new Vector(0, 10, 0));
                                 e.getPlayer().getWorld().createExplosion(location, -1, false);
                             }
                         }
                     }
                 }
             } catch (NullPointerException ex) {
-                // null
+                Admin.getInstance().getLogger().severe("Error occurred while using toystick");
             }
         }
     }
     @EventHandler
     public void onWBDeath(PlayerDeathEvent e) {
-        if (Admin.getInstance().mlg.containsKey(e.getEntity().getName())) {
-            Admin.getInstance().mlg.remove(e.getEntity().getName());
+        if (Cache.containsMLGCache(e.getEntity())) {
+            Cache.removeMLGCache(e.getEntity());
             e.getEntity().sendMessage(ChatColor.RED + "Failed!");
         }
     }
     @EventHandler
     public void onWBPlace(PlayerBucketEmptyEvent e) {
-        if (Admin.getInstance().mlg.containsKey(e.getPlayer().getName())) {
+        if (Cache.containsMLGCache(e.getPlayer())) {
             if (e.getBucket() == Material.WATER_BUCKET) {
                 e.getPlayer().setFallDistance(0);
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(ChatColor.GREEN + "Success!");
-                e.getPlayer().setItemInHand(Admin.getInstance().mlg.get(e.getPlayer().getName()));
-                Admin.getInstance().mlg.remove(e.getPlayer().getName());
+                e.getPlayer().setItemInHand(Cache.getMLGCache(e.getPlayer()));
+                Cache.removeMLGCache(e.getPlayer());
             }
         }
     }

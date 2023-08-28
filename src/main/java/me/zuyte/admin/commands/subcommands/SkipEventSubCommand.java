@@ -3,14 +3,22 @@ package me.zuyte.admin.commands.subcommands;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.NextEvent;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class SkipEventSubCommand {
 
     BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    public SkipEventSubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
 
     public void player(Player p, String[] args) {
             if (!p.hasPermission("bw.admin.skipevent")) {
@@ -32,9 +40,9 @@ public class SkipEventSubCommand {
                     } else if (arena.getNextEvent().equals(NextEvent.EMERALD_GENERATOR_TIER_III)) {
                         arena.setNextEvent(NextEvent.BEDS_DESTROY);
                     } else if (arena.getNextEvent().equals(NextEvent.BEDS_DESTROY)) {
-                        for (int i = 0; i < arena.getTeams().size(); i++) {
-                            if (!arena.getTeams().get(i).isBedDestroyed())
-                                arena.getTeams().get(i).setBedDestroyed(true);
+                        for (ITeam team : arena.getTeams()) {
+                            if (!team.isBedDestroyed())
+                                team.setBedDestroyed(true);
                         }
                         arena.setNextEvent(NextEvent.ENDER_DRAGON);
                     } else if (arena.getNextEvent().equals(NextEvent.ENDER_DRAGON)) {
@@ -65,6 +73,10 @@ public class SkipEventSubCommand {
                     } else if (arena.getNextEvent().equals(NextEvent.EMERALD_GENERATOR_TIER_III)) {
                         arena.setNextEvent(NextEvent.BEDS_DESTROY);
                     } else if (arena.getNextEvent().equals(NextEvent.BEDS_DESTROY)) {
+                        for (ITeam team : arena.getTeams()) {
+                            if (!team.isBedDestroyed())
+                                team.setBedDestroyed(true);
+                        }
                         arena.setNextEvent(NextEvent.ENDER_DRAGON);
                     } else if (arena.getNextEvent().equals(NextEvent.ENDER_DRAGON)) {
                         arena.setNextEvent(NextEvent.GAME_END);

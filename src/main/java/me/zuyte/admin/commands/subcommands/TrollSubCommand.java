@@ -3,7 +3,9 @@ package me.zuyte.admin.commands.subcommands;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import me.zuyte.admin.Admin;
+import me.zuyte.admin.commands.storage.Cache;
 import org.bukkit.*;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -20,6 +22,12 @@ import java.util.List;
 public class TrollSubCommand {
 
     BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    public TrollSubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
 
     public void player(Player p, String[] args) {
             if (!p.hasPermission("bw.admin.troll")) {
@@ -43,7 +51,7 @@ public class TrollSubCommand {
                         playerLoc.setPitch(90);
                         playerLoc.setYaw(-90);
                         player.teleport(playerLoc);
-                        Admin.getInstance().mlg.put(player.getName(), player.getItemInHand());
+                        Cache.setMLGCache(player, player.getItemInHand());
                         player.setItemInHand(new ItemStack(Material.WATER_BUCKET));
                         player.sendMessage(ChatColor.AQUA + "MLG TIME!!");
                         return;
@@ -206,7 +214,7 @@ public class TrollSubCommand {
                             p.sendMessage(ChatColor.RED + "Player is not playing");
                             return;
                         }
-                        Admin.getInstance().kaboom.put(player.getDisplayName(), "true");
+                        Cache.addKaboomCache(player);
                         Location playerLocation = player.getLocation();
                         player.setVelocity(new Vector(0, 35, 0));
                         player.getWorld().strikeLightningEffect(playerLocation);
@@ -360,7 +368,7 @@ public class TrollSubCommand {
                     playerLoc.setPitch(90);
                     playerLoc.setYaw(-90);
                     player.teleport(playerLoc);
-                    Admin.getInstance().mlg.put(player.getName(), player.getItemInHand());
+                    Cache.setMLGCache(player, player.getItemInHand());
                     player.setItemInHand(new ItemStack(Material.WATER_BUCKET));
                     player.sendMessage(ChatColor.AQUA + "MLG TIME!!");
                     return;
@@ -523,7 +531,7 @@ public class TrollSubCommand {
                         p.sendMessage(ChatColor.RED + "Player is not playing");
                         return;
                     }
-                    Admin.getInstance().kaboom.put(player.getDisplayName(), "true");
+                    Cache.addKaboomCache(player);
                     Location playerLocation = player.getLocation();
                     player.setVelocity(new Vector(0, 35, 0));
                     player.getWorld().strikeLightningEffect(playerLocation);

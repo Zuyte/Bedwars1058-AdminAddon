@@ -1,9 +1,11 @@
 package me.zuyte.admin.commands.subcommands;
 
 import com.andrei1058.bedwars.api.BedWars;
+import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
+import me.zuyte.admin.commands.storage.Cache;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,6 +44,10 @@ public class SetTeamSubCommand {
                 p.sendMessage(ChatColor.RED + "Player has not joined an arena");
                 return;
             }
+            if (arenaUtil.getArenaByPlayer(player).getStatus() == GameState.playing || arenaUtil.getArenaByPlayer(player).getStatus() == GameState.restarting) {
+                p.sendMessage(ChatColor.RED + "Can't change player team after the game has started");
+                return;
+            }
             IArena playerArena = arenaUtil.getArenaByPlayer(player);
             if (args.length >= 3) {
                 String team = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
@@ -49,24 +55,22 @@ public class SetTeamSubCommand {
                     p.sendMessage(ChatColor.RED + "Team not found");
                     return;
                 }
-                ITeam playerArenaTeam = playerArena.getTeam(team);
-                if (playerArena.getPlayerTeam(args[1]) != null) {
-                    p.sendMessage(ChatColor.RED + "Player has already selected a team!");
-                    return;
+                ITeam playerTeam = playerArena.getTeam(team);
+                if (playerArena.getTeam(player) != null) {
+                    playerArena.getTeam(player).getMembers().remove(player);
                 }
 
-                if (playerArenaTeam.getMembers().size() == playerArena.getMaxInTeam()) {
+                if (playerTeam.getMembers().size() == playerArena.getMaxInTeam()) {
                     p.sendMessage(ChatColor.RED + "Team is full!");
                     return;
                 }
-                p.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerArenaTeam.getColor().chat() + playerArenaTeam.getName());
-                Admin.getInstance().temp.put(player.getName(), playerArena.getArenaName());
-                Admin.getInstance().temp.put(player.getName() + "-team", playerArenaTeam.getName());
+                Cache.setPlayerTeam(player, playerTeam);
+                playerTeam.addPlayers(player);
+                p.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
                 return;
             } else {
-                if (playerArena.getPlayerTeam(args[1]) != null) {
-                    p.sendMessage(ChatColor.RED + "Player has already selected a team!");
-                    return;
+                if (playerArena.getTeam(player) != null) {
+                    playerArena.getTeam(player).getMembers().remove(player);
                 }
                 setTeamGui(player, playerArena);
                 return;
@@ -86,6 +90,10 @@ public class SetTeamSubCommand {
                 c.sendMessage(ChatColor.RED + "Player has not joined an arena");
                 return;
             }
+            if (arenaUtil.getArenaByPlayer(player).getStatus() == GameState.playing || arenaUtil.getArenaByPlayer(player).getStatus() == GameState.restarting) {
+                c.sendMessage(ChatColor.RED + "Can't change player team after the game has started");
+                return;
+            }
             IArena playerArena = arenaUtil.getArenaByPlayer(player);
             if (args.length >= 3) {
                 String team = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
@@ -93,39 +101,44 @@ public class SetTeamSubCommand {
                     c.sendMessage(ChatColor.RED + "Team not found");
                     return;
                 }
-                ITeam playerArenaTeam = playerArena.getTeam(team);
-                if (playerArena.getPlayerTeam(args[1]) != null) {
-                    c.sendMessage(ChatColor.RED + "Player has already selected a team!");
-                    return;
+                ITeam playerTeam = playerArena.getTeam(team);
+                if (playerArena.getTeam(player) != null) {
+                    playerArena.getTeam(player).getMembers().remove(player);
                 }
 
-                if (playerArenaTeam.getMembers().size() == playerArena.getMaxInTeam()) {
+                if (playerTeam.getMembers().size() == playerArena.getMaxInTeam()) {
                     c.sendMessage(ChatColor.RED + "Team is full!");
                     return;
                 }
-                c.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerArenaTeam.getColor().chat() + playerArenaTeam.getName());
-                Admin.getInstance().temp.put(player.getName(), playerArena.getArenaName());
-                Admin.getInstance().temp.put(player.getName() + "-team", playerArenaTeam.getName());
+                Cache.setPlayerTeam(player, playerTeam);
+                playerTeam.addPlayers(player);
+                c.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
+                return;
+            } else {
+                if (playerArena.getTeam(player) != null) {
+                    playerArena.getTeam(player).getMembers().remove(player);
+                }
+                setTeamGui(player, playerArena);
                 return;
             }
-            c.sendMessage(ChatColor.RED + "Usage: /bw setteam <player> <team>");
         }
+        c.sendMessage(ChatColor.RED + "Usage: /bw setteam <player> <team>");
     }
 
     private void setTeamGui(Player player, IArena arena) {
-        Inventory setTeamInventory = Bukkit.createInventory(player, 9, "Admin - Team Selector");
+        Inventory inventory = Bukkit.createInventory(player, 9, "Admin - Team Selector");
         for (int i = 0; i < arena.getTeams().size(); i++) {
             ITeam team = arena.getTeams().get(i);
-            ItemStack itemStacki = new ItemStack(Material.WOOL, 1, team.getColor().dye().getWoolData());
-            ItemMeta itemMetai = itemStacki.getItemMeta();
-            itemMetai.setDisplayName(team.getColor().chat() + String.valueOf(ChatColor.BOLD) + team.getName());
+            ItemStack itemStack = new ItemStack(Material.WOOL, 1, team.getColor().dye().getWoolData());
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(team.getColor().chat() + String.valueOf(ChatColor.BOLD) + team.getName());
             ArrayList<String> lore = new ArrayList<>();
             lore.add(ChatColor.GRAY + "•" + ChatColor.GREEN + " Click to select team!");
-            itemMetai.setLore(lore);
-            itemStacki.setItemMeta(itemMetai);
-            ItemStack newItemStacki = Admin.getInstance().bw.getVersionSupport().addCustomData(itemStacki, "bwa-team-selector");
-            setTeamInventory.setItem(i, newItemStacki);
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+            ItemStack newItemStack = Admin.getInstance().bw.getVersionSupport().addCustomData(itemStack, "bwa-team-selector");
+            inventory.setItem(i, newItemStack);
         }
-        player.openInventory(setTeamInventory);
+        player.openInventory(inventory);
     }
 }
