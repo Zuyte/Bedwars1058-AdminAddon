@@ -20,7 +20,7 @@ public class AdminBWSubCommand extends SubCommand {
         showInList(true);
         setPriority(20);
         setArenaSetupCommand(false);
-        setDisplayInfo(textComponentBuilder(" &6▪ &7/bw admin &8- &eTo see command list"));
+        setDisplayInfo(textComponentBuilder(TextUtils.getColoredString(" &6▪ &7/bw admin &8- &eTo see command list")));
     }
 
     @Override

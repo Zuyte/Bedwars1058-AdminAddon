@@ -20,8 +20,8 @@ public class ArenaListener implements Listener {
     public void onGameStateChange(GameStateChangeEvent e) {
         if (e.getNewState() == GameState.playing) {
             for (ITeam team : e.getArena().getTeams()) {
-                if (team.isBedDestroyed()) return;
-                BlockFace targetFace = ((org.bukkit.material.Bed) team.getBed().getBlock().getState().getData()).getFacing();
+                if (team.isBedDestroyed()) continue;
+                BlockFace targetFace = team.getBed().getBlock().getFace(team.getBed().getBlock());
                 Cache.setArenaBedsCache(team, targetFace);
             }
         }

@@ -1,6 +1,8 @@
 package me.zuyte.admin.commands.proxy;
 
 import com.andrei1058.bedwars.api.arena.IArena;
+import com.andrei1058.bedwars.proxy.api.BedWars;
+import com.andrei1058.bedwars.proxy.api.CachedArena;
 import com.andrei1058.bedwars.proxy.arenamanager.ArenaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,10 +24,8 @@ public class AdminProxyTabComplete implements TabCompleter {
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("forcejoin")) {
                     List<String> arenaNames = new ArrayList<>();
-                    IArena[] arenas = new IArena[ArenaManager.getArenas().size()];
-                    ArenaManager.getArenas().toArray(arenas);
-                    for (int i = 0; i < arenas.length; i++) {
-                        arenaNames.add(arenas[i].getArenaName());
+                    for (CachedArena cachedArena : ArenaManager.getArenas()) {
+                        arenaNames.add(cachedArena.getArenaName());
                     }
                     return arenaNames;
                 }
@@ -33,10 +33,8 @@ public class AdminProxyTabComplete implements TabCompleter {
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("forcejoin")) {
                     List<String> playerNames = new ArrayList<>();
-                    Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
-                    Bukkit.getServer().getOnlinePlayers().toArray(players);
-                    for (int i = 0; i < players.length; i++) {
-                        playerNames.add(players[i].getName());
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        playerNames.add(player.getName());
                     }
                     return playerNames;
                 }

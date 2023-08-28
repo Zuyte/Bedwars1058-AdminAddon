@@ -45,7 +45,7 @@ public class SetTeamSubCommand {
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player).getStatus() == GameState.playing || arenaUtil.getArenaByPlayer(player).getStatus() == GameState.restarting) {
-                p.sendMessage(ChatColor.RED + "Can't change player team after the game has started");
+                p.sendMessage(ChatColor.RED + "Can't change player team after the game has been started");
                 return;
             }
             IArena playerArena = arenaUtil.getArenaByPlayer(player);
@@ -91,7 +91,7 @@ public class SetTeamSubCommand {
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player).getStatus() == GameState.playing || arenaUtil.getArenaByPlayer(player).getStatus() == GameState.restarting) {
-                c.sendMessage(ChatColor.RED + "Can't change player team after the game has started");
+                c.sendMessage(ChatColor.RED + "Can't change player team after the game has been started");
                 return;
             }
             IArena playerArena = arenaUtil.getArenaByPlayer(player);

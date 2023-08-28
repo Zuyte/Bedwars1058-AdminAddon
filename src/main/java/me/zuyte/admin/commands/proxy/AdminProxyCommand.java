@@ -11,41 +11,21 @@ import org.bukkit.entity.Player;
 public class AdminProxyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
-            if (args.length == 0) {
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&r\n&8&lþ &6BedWars1058 Admin v" + Admin.version + " &7- &cCommands\n \n&6• &7/bwa forcejoin <player> <arena> &8- &eForcejoin player into an arena"));
+        Player p = (Player) sender;
+        if (args.length == 0) {
+            new HelpProxySubCommand(sender);
+            return true;
+        } else if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("help")) {
+                new HelpProxySubCommand(sender);
                 return true;
-            } else if (args.length >= 1) {
-                if (args[0].equalsIgnoreCase("help")) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&r\n&8&lþ &6BedWars1058 Admin v" + Admin.version + " &7- &cCommands\n \n&6• &7/bwa forcejoin <player> <arena> &8- &eForcejoin player into an arena"));
-                    return true;
-                } else if (args[0].equalsIgnoreCase("forcejoin")) {
-                    new ForceJoinProxySubCommand().player(p, args);
-                    return true;
-                }
-                p.sendMessage(ChatColor.RED + "Command not found.");
+            } else if (args[0].equalsIgnoreCase("forcejoin")) {
+                new ForceJoinProxySubCommand(sender, args);
                 return true;
             }
+            p.sendMessage(ChatColor.RED + "Command not found.");
+            return true;
         }
-        if (sender instanceof ConsoleCommandSender) {
-            ConsoleCommandSender c = (ConsoleCommandSender) sender;
-            if (args.length == 0) {
-                c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&r\n&8&lþ &6BedWars1058 Admin v" + Admin.version + " &7- &cCommands\n \n&6• &7/bwa forcejoin <player> <arena> &8- &eForcejoin player into an arena"));
-                return true;
-            }
-            if (args.length >= 1) {
-                if (args[0].equalsIgnoreCase("help")) {
-                    c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&r\n&8&lþ &6BedWars1058 Admin v" + Admin.version + " &7- &cCommands\n \n&6• &7/bwa forcejoin <player> <arena> &8- &eForcejoin player into an arena"));
-                    return true;
-                } else if (args[0].equalsIgnoreCase("forcejoin")) {
-                    new ForceJoinProxySubCommand().console(c, args);
-                    return true;
-                }
-                c.sendMessage(ChatColor.RED + "Command not found.");
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 }

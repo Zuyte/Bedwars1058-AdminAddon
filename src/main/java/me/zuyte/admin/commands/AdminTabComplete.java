@@ -12,72 +12,58 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AdminTabComplete implements TabCompleter {
-    
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("bwa")) {
-        if (args.length == 1) {
-            // "revive",
-            return Arrays.asList("help", "forcejoin", "setteam", "setbed", "skipevent", "nextevent", "troll");
-        }
-        if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("forcejoin") || args[0].equalsIgnoreCase("setteam") || args[0].equalsIgnoreCase("setbed")) {
-                List<String> playerNames = new ArrayList<>();
-                Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
-                Bukkit.getServer().getOnlinePlayers().toArray(players);
-                for (int i = 0; i < players.length; i++) {
-                    playerNames.add(players[i].getName());
-                }
-                return playerNames;
-            } else if (args[0].equalsIgnoreCase("nextevent") || args[0].equalsIgnoreCase("skipevent")) {
-                List<String> arenaNames = new ArrayList<>();
-                IArena[] arenas = new IArena[Admin.getInstance().bw.getArenaUtil().getArenas().size()];
-                Admin.getInstance().bw.getArenaUtil().getArenas().toArray(arenas);
-                for (int i = 0; i < arenas.length; i++) {
-                    arenaNames.add(arenas[i].getArenaName());
-                }
-                return arenaNames;
-            } else if (args[0].equalsIgnoreCase("troll")) {
-                return Arrays.asList("mlg", "cage", "blind", "slowhands", "kaboom", "toystick", "ghast", "mobattack");
+            if (args.length == 1) {
+                return Arrays.asList("help", "forcejoin", "setteam", "setbed", "skipevent", "nextevent", "troll");
             }
-        }
-        if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("forcejoin")) {
-                List<String> arenaNames = new ArrayList<>();
-                List arenaGroupsList = Admin.bw.getConfigs().getMainConfig().getYml().getStringList(".arenaGroups");
-                String[] arenaGroups = new String[arenaGroupsList.size()];
-                arenaGroupsList.toArray(arenaGroups);
-                arenaNames.addAll(Arrays.asList(arenaGroups).subList(0, arenaGroupsList.size()));
-                    IArena[] arenas = new IArena[Admin.getInstance().bw.getArenaUtil().getArenas().size()];
-                    Admin.getInstance().bw.getArenaUtil().getArenas().toArray(arenas);
-
-                    for (int i = 0; i < arenas.length; i++) {
-                        arenaNames.add(arenas[i].getArenaName());
+            if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("forcejoin") || args[0].equalsIgnoreCase("setteam") || args[0].equalsIgnoreCase("setbed")) {
+                    List<String> playerNames = new ArrayList<>();
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        playerNames.add(player.getName());
+                    }
+                    return playerNames;
+                } else if (args[0].equalsIgnoreCase("nextevent") || args[0].equalsIgnoreCase("skipevent")) {
+                    List<String> arenaNames = new ArrayList<>();
+                    for (IArena arena : Admin.getInstance().bw.getArenaUtil().getArenas()) {
+                        arenaNames.add(arena.getArenaName());
                     }
                     return arenaNames;
+                } else if (args[0].equalsIgnoreCase("troll")) {
+                    return Arrays.asList("mlg", "cage", "blind", "slowhands", "kaboom", "toystick", "ghast", "mobattack");
+                }
             }
+            if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("forcejoin")) {
+                    List<String> arenaNames = new ArrayList<>();
+                    for (IArena arena : Admin.getInstance().bw.getArenaUtil().getArenas()) {
+                        arenaNames.add(arena.getArenaName());
+                    }
+                    return arenaNames;
+                }
 //            if (args[0].equalsIgnoreCase("revive")) {
 //                return Arrays.asList("final", "bed");
 //            }
-            if (args[0].equalsIgnoreCase("setbed")) {
-                return Arrays.asList("true", "false");
-            }
-            if (args[0].equalsIgnoreCase("nextevent")) {
-                return Arrays.asList("diamond-2", "diamond-3", "emerald-2", "emerald-3", "bed-destroy", "dragon", "end");
-            }
-            if (args[0].equalsIgnoreCase("setteam")) {
-                BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
-                if (Bukkit.getPlayerExact(args[1]) != null) {
-                    if (arenaUtil.getArenaByPlayer(Bukkit.getPlayerExact(args[1])) != null) {
+                if (args[0].equalsIgnoreCase("setbed")) {
+                    return Arrays.asList("true", "false");
+                }
+                if (args[0].equalsIgnoreCase("nextevent")) {
+                    return Arrays.asList("diamond-2", "diamond-3", "emerald-2", "emerald-3", "bed-destroy", "dragon", "end");
+                }
+                if (args[0].equalsIgnoreCase("setteam")) {
+                    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+                    if (Bukkit.getPlayerExact(args[1]) != null && arenaUtil.getArenaByPlayer(Bukkit.getPlayerExact(args[1])) != null) {
                         Player player = Bukkit.getPlayerExact(args[1]);
                         List<String> teamNames = new ArrayList<>();
-                        ITeam[] teams = new ITeam[arenaUtil.getArenaByPlayer(player).getTeams().size()];
-                        arenaUtil.getArenaByPlayer(player).getTeams().toArray(teams);
-                        for (int i = 0; i < teams.length; i++) {
-                            teamNames.add(teams[i].getName());
+                        for (ITeam team : arenaUtil.getArenaByPlayer(player).getTeams()) {
+                            teamNames.add(team.getName());
                         }
                         return teamNames;
                     }
@@ -85,15 +71,12 @@ public class AdminTabComplete implements TabCompleter {
             }
             if (args[0].equalsIgnoreCase("troll")) {
                 List<String> playerNames = new ArrayList<>();
-                Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
-                Bukkit.getServer().getOnlinePlayers().toArray(players);
-                for (int i = 0; i < players.length; i++) {
-                    playerNames.add(players[i].getName());
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    playerNames.add(player.getName());
                 }
                 return playerNames;
             }
         }
-    }
-        return null;
+        return Collections.emptyList();
     }
 }

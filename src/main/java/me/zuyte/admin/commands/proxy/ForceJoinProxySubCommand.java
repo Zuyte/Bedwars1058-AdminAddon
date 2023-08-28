@@ -1,13 +1,22 @@
 package me.zuyte.admin.commands.proxy;
 
+import com.andrei1058.bedwars.proxy.api.CachedArena;
 import com.andrei1058.bedwars.proxy.arenamanager.ArenaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class ForceJoinProxySubCommand {
-    public void player(Player p, String[] args) {
+    public ForceJoinProxySubCommand(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player)
+            player((Player) commandSender, args);
+        else if (commandSender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) commandSender, args);
+    }
+
+    private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.forcejoin")) {
             p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
             return;
@@ -20,27 +29,25 @@ public class ForceJoinProxySubCommand {
             }
             if (args.length >= 3) {
                 String arenaWorld = args[2];
-                for (int i = 0; i < ArenaManager.getArenas().size(); i++) {
-                    if (ArenaManager.getArenas().get(i).getArenaName().equals(arenaWorld)) {
-                        ArenaManager.getArenas().get(i).addPlayer(player, "true");
+                for (CachedArena cachedArena : ArenaManager.getArenas()) {
+                    if (cachedArena.getArenaName().equals(arenaWorld)) {
+                        cachedArena.addPlayer(player, "true");
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aForce joined " + player.getName() + " to " + arenaWorld));
                         return;
                     }
                 }
-                try {
-                    ArenaManager.getInstance().joinRandomFromGroup(player, args[2]);
+                if (ArenaManager.getInstance().joinRandomFromGroup(player, args[2])) {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aForce joined " + player.getName() + " to " + arenaWorld));
-                    return;
-                } catch (Exception ex) {
-                    // e
+                } else {
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cArena/Group not found"));
                 }
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cArena/Group not found"));
                 return;
             }
         }
         p.sendMessage(ChatColor.RED + "Usage: /bwa forcejoin <player> <arena>");
     }
-    public void console(ConsoleCommandSender c, String[] args) {
+
+    private void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
@@ -49,21 +56,18 @@ public class ForceJoinProxySubCommand {
             }
             if (args.length >= 3) {
                 String arenaWorld = args[2];
-                for (int i = 0; i < ArenaManager.getArenas().size(); i++) {
-                    if (ArenaManager.getArenas().get(i).getArenaName().equals(arenaWorld)) {
-                        ArenaManager.getArenas().get(i).addPlayer(player, "true");
+                for (CachedArena cachedArena : ArenaManager.getArenas()) {
+                    if (cachedArena.getArenaName().equals(arenaWorld)) {
+                        cachedArena.addPlayer(player, "true");
                         c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aForce joined " + player.getName() + " to " + arenaWorld));
                         return;
                     }
                 }
-                try {
-                    ArenaManager.getInstance().joinRandomFromGroup(player, args[2]);
+                if (ArenaManager.getInstance().joinRandomFromGroup(player, args[2])) {
                     c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aForce joined " + player.getName() + " to " + arenaWorld));
-                    return;
-                } catch (Exception ex) {
-                    // e
+                } else {
+                    c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cArena/Group not found"));
                 }
-                c.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cArena/Group not found"));
                 return;
             }
         }
