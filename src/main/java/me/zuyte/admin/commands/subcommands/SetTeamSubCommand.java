@@ -5,7 +5,7 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.storage.Cache;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

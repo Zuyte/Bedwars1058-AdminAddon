@@ -1,4 +1,4 @@
-package me.zuyte.admin.commands.storage;
+package me.zuyte.admin.storage;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;

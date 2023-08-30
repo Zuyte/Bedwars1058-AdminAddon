@@ -1,4 +1,4 @@
-package me.zuyte.admin.commands.storage;
+package me.zuyte.admin.storage;
 
 import com.andrei1058.bedwars.api.language.Language;
 import me.zuyte.admin.Admin;

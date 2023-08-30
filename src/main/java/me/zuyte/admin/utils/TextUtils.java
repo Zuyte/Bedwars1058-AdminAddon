@@ -1,7 +1,6 @@
 package me.zuyte.admin.utils;
 
-import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Messages;
+import me.zuyte.admin.storage.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

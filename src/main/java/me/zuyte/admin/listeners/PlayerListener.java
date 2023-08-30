@@ -1,7 +1,7 @@
 package me.zuyte.admin.listeners;
 
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.storage.Cache;
 import me.zuyte.admin.utils.ExtraUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

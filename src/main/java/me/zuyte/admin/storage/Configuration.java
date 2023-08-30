@@ -1,4 +1,4 @@
-package me.zuyte.admin.commands.storage;
+package me.zuyte.admin.storage;
 
 public class Configuration {
     // In Progress...

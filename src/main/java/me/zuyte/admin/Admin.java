@@ -4,7 +4,7 @@ import com.andrei1058.bedwars.api.BedWars;
 import me.zuyte.admin.commands.AdminCommand;
 import me.zuyte.admin.commands.AdminTabComplete;
 import me.zuyte.admin.commands.proxy.AdminProxyTabComplete;
-import me.zuyte.admin.commands.storage.Messages;
+import me.zuyte.admin.storage.Messages;
 import me.zuyte.admin.commands.subcommands.AdminBWSubCommand;
 import me.zuyte.admin.commands.proxy.AdminProxyCommand;
 import me.zuyte.admin.listeners.*;
