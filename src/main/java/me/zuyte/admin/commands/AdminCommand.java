@@ -2,6 +2,7 @@ package me.zuyte.admin.commands;
 
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.commands.subcommands.*;
+import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,7 +38,7 @@ public class AdminCommand implements CommandExecutor {
                 new TrollSubCommand(sender, args);
                 return true;
             }
-            sender.sendMessage(ChatColor.RED + "Command not found.");
+            TextUtils.sendDefaultConfigString("admin-message.team.not-found", sender);
         }
         return true;
     }

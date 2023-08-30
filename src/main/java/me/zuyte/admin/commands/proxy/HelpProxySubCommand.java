@@ -23,7 +23,7 @@ public class HelpProxySubCommand {
         List<String> helpMessage = new ArrayList<>(Collections.emptyList());
         helpMessage.add(TextUtils.getColoredString("&r\n&8&lþ &6BedWars1058 Admin v" + Admin.getInstance().getDescription().getVersion() + " &7- &cCommands"));
         helpMessage.add(TextUtils.getColoredString("&r "));
-        helpMessage.add(TextUtils.getColoredString("&6• &7/bwa forcejoin <player> <arena> &8- &eForcejoin player into an arena"));
+        helpMessage.add(TextUtils.getColoredString("&6• &7/bwa forcejoin <player> <arena/group> &8- &eForcejoin player into an arena"));
 
         c.sendMessage(Joiner.on("\n").join(helpMessage));
     }
