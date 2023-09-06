@@ -27,9 +27,10 @@ public final class Admin extends JavaPlugin {
         else {
             getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
             Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
 
-        getLogger().info(TextUtils.getColoredString("&aRunning BedWars1058-AdminAddon &fv" + getDescription().getVersion() + " (Type: " + (isBedWarsProxy ? "BedWarsProxy" : "BedWars") + ") &7- &eBy Zuyte"));
+        getServer().getConsoleSender().sendMessage(TextUtils.getColoredString("&aRunning BedWars1058-AdminAddon &fv" + getDescription().getVersion() + " &a(Type: " + (isBedWarsProxy ? "&cBedWarsProxy" : "&cBedWars") + "&a) &7- &eBy Zuyte"));
     }
 
     private void setupBedWars() {
