@@ -3,7 +3,7 @@ package me.zuyte.admin.commands.subcommands;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.storage.Cache;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;

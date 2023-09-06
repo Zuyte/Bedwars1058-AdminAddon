@@ -24,13 +24,13 @@ public class ForceJoinSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.forcejoin")) {
-            p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
+            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                p.sendMessage(ChatColor.RED + "Player not found");
+                TextUtils.sendPlayerConfigString("defaults.player-not-found", p);
                 return;
             }
             if (args.length >= 3) {
@@ -44,7 +44,7 @@ public class ForceJoinSubCommand {
                     }
                 }
                 if (!isAGroup && arenaUtil.getArenaByName(arenaWorld) == null) {
-                    p.sendMessage(ChatColor.RED + "Arena/Group not found");
+                    TextUtils.sendPlayerConfigString("defaults.arena-group-not-found", p);
                     return;
                 }
                 if (!isAGroup)
@@ -52,18 +52,19 @@ public class ForceJoinSubCommand {
                 else
                     arenaUtil.joinRandomFromGroup(player, arenaWorld);
 
-                p.sendMessage(TextUtils.getColoredString("&aForce joined " + player.getName() + " to " + (isAGroup ? "group " : "arena ") + arenaWorld));
+                p.sendMessage(TextUtils.getPlayerConfigString("admin-message.force-join", p).replace("{player}", player.getName()).replace("{world}", arenaWorld));
+                player.sendMessage(TextUtils.getPlayerConfigString("player-message.force-join", player).replace("{world}", arenaWorld));
                 return;
             }
         }
-        p.sendMessage(ChatColor.RED + "Usage: /bw forcejoin <player> <arena>");
+        TextUtils.sendPlayerConfigString("usage.forcejoin", p);
     }
 
     private void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                c.sendMessage(ChatColor.RED + "Player not found");
+                TextUtils.sendDefaultConfigString("defaults.player-not-found", c);
                 return;
             }
             if (args.length >= 3) {
@@ -71,24 +72,25 @@ public class ForceJoinSubCommand {
                 List<String> arenaGroups = Admin.getInstance().bw.getConfigs().getMainConfig().getYml().getStringList(".arenaGroups");
                 boolean isAGroup = false;
                 for (String group : arenaGroups) {
-                    if (group.equals(args[2])) {
+                    if (group.equals(arenaWorld)) {
                         isAGroup = true;
                         break;
                     }
                 }
                 if (!isAGroup && arenaUtil.getArenaByName(arenaWorld) == null) {
-                    c.sendMessage(ChatColor.RED + "Arena/Group not found");
+                    TextUtils.sendDefaultConfigString("defaults.arena-group-not-found", c);
                     return;
                 }
                 if (!isAGroup)
                     arenaUtil.getArenaByName(arenaWorld).addPlayer(player, true);
                 else
-                    arenaUtil.joinRandomFromGroup(player, args[2]);
+                    arenaUtil.joinRandomFromGroup(player, arenaWorld);
 
-                c.sendMessage(TextUtils.getColoredString("&aForce joined " + player.getName() + " to " + (isAGroup ? "group " : "arena ") + arenaWorld));
+                c.sendMessage(TextUtils.getDefaultConfigString("admin-message.force-join").replace("{player}", player.getName()).replace("{world}", arenaWorld));
+                player.sendMessage(TextUtils.getPlayerConfigString("player-message.force-join", player).replace("{world}", arenaWorld));
                 return;
             }
         }
-        c.sendMessage(ChatColor.RED + "Usage: /bw forcejoin <player> <arena>");
+        TextUtils.sendDefaultConfigString("usage.forcejoin", c);
     }
 }

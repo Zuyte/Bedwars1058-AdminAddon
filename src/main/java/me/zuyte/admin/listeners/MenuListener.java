@@ -3,7 +3,8 @@ package me.zuyte.admin.listeners;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.storage.Cache;
+import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,16 +33,16 @@ public class MenuListener implements Listener {
         String teamName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
         ITeam team = arena.getTeam(teamName);
         if (arena.getTeam(teamName) == null) {
-            p.sendMessage(ChatColor.RED + "Error: Team not found");
+            TextUtils.sendPlayerConfigString("admin-message.team.not-found", p);
             return;
         }
         if (team.getMembers().size() == arena.getMaxInTeam()) {
-            p.sendMessage(ChatColor.RED + "Team is full!");
+            TextUtils.sendPlayerConfigString("admin-message.team.full", p);
             return;
         }
 
         Cache.setPlayerTeam(p, team);
-        p.sendMessage(ChatColor.GREEN + "Successfully set " + p.getName() + "'s Team to " + team.getColor().chat() + team.getName());
+        p.sendMessage(TextUtils.getPlayerConfigString("admin-message.team.success", p).replace("{player}", p.getName()).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw.getPlayerLanguage(p))));
         p.closeInventory();
     }
 }

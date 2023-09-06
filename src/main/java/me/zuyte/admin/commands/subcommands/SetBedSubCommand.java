@@ -4,9 +4,9 @@ import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.storage.Cache;
+import me.zuyte.admin.storage.Cache;
+import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -28,17 +28,17 @@ public class SetBedSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.setbed")) {
-            p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
+            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                p.sendMessage(ChatColor.RED + "Player not found");
+                TextUtils.sendPlayerConfigString("defaults.player-not-found", p);
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player) == null) {
-                p.sendMessage(ChatColor.RED + "Player has not joined an arena");
+                TextUtils.sendPlayerConfigString("player-not-joined-arena", p);
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
@@ -48,28 +48,28 @@ public class SetBedSubCommand {
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
-                    p.sendMessage(ChatColor.GREEN + "Success!");
+                    TextUtils.sendPlayerConfigString("defaults.success", p);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(true);
-                    p.sendMessage(ChatColor.GREEN + "Success!");
+                    TextUtils.sendPlayerConfigString("defaults.success", p);
                     return;
                 }
             }
         }
-        p.sendMessage(ChatColor.RED + "Usage: /bw setbed <player> <true ┃ false>");
+        TextUtils.sendPlayerConfigString("usage.setbed", p);
     }
 
     private void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                c.sendMessage(ChatColor.RED + "Player not found");
+                TextUtils.sendDefaultConfigString("defaults.player-not-found", c);
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player) == null) {
-                c.sendMessage(ChatColor.RED + "Player has not joined an arena");
+                TextUtils.sendDefaultConfigString("defaults.player-not-joined-arena", c);
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
@@ -79,17 +79,17 @@ public class SetBedSubCommand {
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
-                    c.sendMessage(ChatColor.GREEN + "Success!");
+                    TextUtils.sendDefaultConfigString("defaults.success", c);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(true);
-                    c.sendMessage(ChatColor.GREEN + "Success!");
+                    TextUtils.sendDefaultConfigString("defaults.success", c);
                     return;
                 }
             }
         }
-        c.sendMessage(ChatColor.RED + "Usage: /bw setbed <player> <true ┃ false>");
+        TextUtils.sendDefaultConfigString("usage.setbed", c);
     }
 
     private void placeBed(Location loc, BlockFace face) {

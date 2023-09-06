@@ -4,6 +4,7 @@ import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.NextEvent;
 import me.zuyte.admin.Admin;
+import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -21,66 +22,88 @@ public class NextEventSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.nextevent")) {
-            p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
+            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                p.sendMessage(ChatColor.RED + "Arena not found");
+                TextUtils.sendPlayerConfigString("defaults.arena-not-found", p);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
             if (args.length >= 3) {
+                boolean found = false;
                 if (args[2].equalsIgnoreCase("diamond-2")) {
                     arena.setNextEvent(NextEvent.DIAMOND_GENERATOR_TIER_II);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("diamond-3")) {
                     arena.setNextEvent(NextEvent.DIAMOND_GENERATOR_TIER_III);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("emerald-2")) {
                     arena.setNextEvent(NextEvent.EMERALD_GENERATOR_TIER_II);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("emerald-3")) {
                     arena.setNextEvent(NextEvent.EMERALD_GENERATOR_TIER_III);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("bed-destroy")) {
                     arena.setNextEvent(NextEvent.BEDS_DESTROY);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("dragon")) {
                     arena.setNextEvent(NextEvent.ENDER_DRAGON);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("end")) {
                     arena.setNextEvent(NextEvent.GAME_END);
+                    found = true;
                 }
-                p.sendMessage(ChatColor.GREEN + "Success!");
+                if (found)
+                    TextUtils.sendPlayerConfigString("defaults.success", p);
+                else
+                    TextUtils.sendPlayerConfigString("admin-message.nextevent.error", p);
                 return;
             }
         }
-        p.sendMessage(ChatColor.RED + "Usage: /bw nextevent <arena> <event>");
+        TextUtils.sendPlayerConfigString("usage.nextevent", p);
     }
 
     private void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                c.sendMessage(ChatColor.RED + "Arena not found");
+                TextUtils.sendDefaultConfigString("defaults.arena-not-found", c);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
             if (args.length >= 3) {
+                boolean found = false;
                 if (args[2].equalsIgnoreCase("diamond-2")) {
                     arena.setNextEvent(NextEvent.DIAMOND_GENERATOR_TIER_II);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("diamond-3")) {
                     arena.setNextEvent(NextEvent.DIAMOND_GENERATOR_TIER_III);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("emerald-2")) {
                     arena.setNextEvent(NextEvent.EMERALD_GENERATOR_TIER_II);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("emerald-3")) {
                     arena.setNextEvent(NextEvent.EMERALD_GENERATOR_TIER_III);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("bed-destroy")) {
                     arena.setNextEvent(NextEvent.BEDS_DESTROY);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("dragon")) {
                     arena.setNextEvent(NextEvent.ENDER_DRAGON);
+                    found = true;
                 } else if (args[2].equalsIgnoreCase("end")) {
                     arena.setNextEvent(NextEvent.GAME_END);
+                    found = true;
                 }
-                c.sendMessage(ChatColor.GREEN + "Success!");
+                if (found)
+                    TextUtils.sendDefaultConfigString("defaults.success", c);
+                else
+                    TextUtils.sendDefaultConfigString("admin-message.nextevent.error", c);
                 return;
             }
         }
-        c.sendMessage(ChatColor.RED + "Usage: /bw nextevent <arena> <event>");
+        TextUtils.sendDefaultConfigString("usage.nextevent", c);
     }
 
 }

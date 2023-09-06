@@ -4,6 +4,7 @@ import com.andrei1058.bedwars.api.BedWars;
 import me.zuyte.admin.commands.AdminCommand;
 import me.zuyte.admin.commands.AdminTabComplete;
 import me.zuyte.admin.commands.proxy.AdminProxyTabComplete;
+import me.zuyte.admin.storage.Messages;
 import me.zuyte.admin.commands.subcommands.AdminBWSubCommand;
 import me.zuyte.admin.commands.proxy.AdminProxyCommand;
 import me.zuyte.admin.listeners.*;
@@ -14,8 +15,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class Admin extends JavaPlugin {
 
     private static Admin instance;
-    private boolean isBedWarsProxy = false;
+    public boolean isBedWarsProxy = false;
     public BedWars bw;
+    public com.andrei1058.bedwars.proxy.api.BedWars bwProxy;
     @Override
     public void onEnable() {
         instance = this;
@@ -35,6 +37,7 @@ public final class Admin extends JavaPlugin {
 
     private void setupBedWars() {
         bw = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
+        new Messages();
         new AdminBWSubCommand(bw.getBedWarsCommand(), "admin");
         getCommand("bwa").setExecutor(new AdminCommand());
         getCommand("bwa").setTabCompleter(new AdminTabComplete());
@@ -50,6 +53,7 @@ public final class Admin extends JavaPlugin {
 
     private void setupProxy() {
         isBedWarsProxy = true;
+        bwProxy = Bukkit.getServicesManager().getRegistration(com.andrei1058.bedwars.proxy.api.BedWars.class).getProvider();
         getCommand("bwa").setExecutor(new AdminProxyCommand());
         getCommand("bwa").setTabCompleter(new AdminProxyTabComplete());
     }
