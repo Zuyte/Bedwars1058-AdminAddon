@@ -1,11 +1,9 @@
-package me.zuyte.admin.commands.proxy;
+package me.zuyte.admin.command.proxy;
 
-import me.zuyte.admin.Admin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class AdminProxyCommand implements CommandExecutor {

@@ -1,4 +1,4 @@
-package me.zuyte.admin.listeners;
+package me.zuyte.admin.listener;
 
 import com.andrei1058.bedwars.teamselector.api.events.TeamSelectorChooseEvent;
 import me.zuyte.admin.Admin;

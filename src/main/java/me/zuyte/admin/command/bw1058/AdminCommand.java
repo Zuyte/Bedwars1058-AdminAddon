@@ -1,14 +1,10 @@
-package me.zuyte.admin.commands;
+package me.zuyte.admin.command.bw1058;
 
-import me.zuyte.admin.Admin;
-import me.zuyte.admin.commands.subcommands.*;
-import me.zuyte.admin.utils.TextUtils;
-import org.bukkit.ChatColor;
+import me.zuyte.admin.command.bw1058.subcommands.*;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 
 public class AdminCommand implements CommandExecutor {
     @Override

@@ -1,14 +1,10 @@
-package me.zuyte.admin.commands.subcommands;
+package me.zuyte.admin.command.bw1058.subcommands;
 
 import com.andrei1058.bedwars.api.command.ParentCommand;
 import com.andrei1058.bedwars.api.command.SubCommand;
-import me.zuyte.admin.Admin;
-import me.zuyte.admin.utils.TextUtils;
+import me.zuyte.admin.util.TextUtils;
 import net.md_5.bungee.api.chat.*;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package me.zuyte.admin.commands.subcommands;
+package me.zuyte.admin.command.bw1058.subcommands;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.GameState;

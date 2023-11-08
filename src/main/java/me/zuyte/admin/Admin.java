@@ -1,14 +1,18 @@
 package me.zuyte.admin;
 
 import com.andrei1058.bedwars.api.BedWars;
-import me.zuyte.admin.commands.AdminCommand;
-import me.zuyte.admin.commands.AdminTabComplete;
-import me.zuyte.admin.commands.proxy.AdminProxyTabComplete;
+import me.zuyte.admin.command.bw1058.AdminCommand;
+import me.zuyte.admin.command.bw1058.AdminTabComplete;
+import me.zuyte.admin.command.proxy.AdminProxyTabComplete;
 import me.zuyte.admin.storage.Messages;
-import me.zuyte.admin.commands.subcommands.AdminBWSubCommand;
-import me.zuyte.admin.commands.proxy.AdminProxyCommand;
-import me.zuyte.admin.listeners.*;
-import me.zuyte.admin.utils.TextUtils;
+import me.zuyte.admin.command.bw1058.subcommands.AdminBWSubCommand;
+import me.zuyte.admin.command.proxy.AdminProxyCommand;
+import me.zuyte.admin.listener.*;
+import me.zuyte.admin.support.BW1058;
+import me.zuyte.admin.support.BW2023;
+import me.zuyte.admin.support.BWProxy;
+import me.zuyte.admin.support.IBedWars;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,41 +25,26 @@ public final class Admin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        IBedWars bwSupport;
 
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null)
-            setupBedWars();
+            bwSupport = new BW1058(this);
+        else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null)
+            bwSupport = new BW2023(this);
         else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null)
-            setupProxy();
+            bwSupport = new BWProxy(this);
         else {
             getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
+        // Hook into the support
+        bwSupport.setupMessages();
+        bwSupport.setupCommands();
+        bwSupport.initializeListeners();
+
         getServer().getConsoleSender().sendMessage(TextUtils.getColoredString("&aRunning BedWars1058-AdminAddon &fv" + getDescription().getVersion() + " &a(Type: " + (isBedWarsProxy ? "&cBedWarsProxy" : "&cBedWars") + "&a) &7- &eBy Zuyte"));
-    }
-
-    private void setupBedWars() {
-        bw = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
-        new Messages();
-        new AdminBWSubCommand(bw.getBedWarsCommand(), "admin");
-        getCommand("bwa").setExecutor(new AdminCommand());
-        getCommand("bwa").setTabCompleter(new AdminTabComplete());
-        getServer().getPluginManager().registerEvents(new ArenaListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerListener(this) , this);
-        getServer().getPluginManager().registerEvents(new MenuListener(this) , this);
-        getServer().getPluginManager().registerEvents(new TeamAssignerListener(this), this);
-        if (Bukkit.getPluginManager().getPlugin("BedWars1058-TeamSelector") != null) {
-            getLogger().info("Found BedWars1058-TeamSelector, Hooking into it...");
-            getServer().getPluginManager().registerEvents(new TeamSelectorListener(this), this);
-        }
-    }
-
-    private void setupProxy() {
-        isBedWarsProxy = true;
-        bwProxy = Bukkit.getServicesManager().getRegistration(com.andrei1058.bedwars.proxy.api.BedWars.class).getProvider();
-        getCommand("bwa").setExecutor(new AdminProxyCommand());
-        getCommand("bwa").setTabCompleter(new AdminProxyTabComplete());
     }
 
     public static Admin getInstance(){

@@ -1,8 +1,8 @@
-package me.zuyte.admin.commands.subcommands;
+package me.zuyte.admin.command.bw1058.subcommands;
 
 import com.google.common.base.Joiner;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.utils.TextUtils;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

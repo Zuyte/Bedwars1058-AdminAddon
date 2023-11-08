@@ -1,4 +1,4 @@
-package me.zuyte.admin.utils;
+package me.zuyte.admin.util;
 
 import me.zuyte.admin.storage.Messages;
 import org.bukkit.ChatColor;

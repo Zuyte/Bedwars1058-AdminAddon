@@ -1,8 +1,8 @@
-package me.zuyte.admin.commands.proxy;
+package me.zuyte.admin.command.proxy;
 
 import com.google.common.base.Joiner;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.utils.TextUtils;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

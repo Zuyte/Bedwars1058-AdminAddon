@@ -1,10 +1,10 @@
-package me.zuyte.admin.listeners;
+package me.zuyte.admin.listener;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache;
-import me.zuyte.admin.utils.TextUtils;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

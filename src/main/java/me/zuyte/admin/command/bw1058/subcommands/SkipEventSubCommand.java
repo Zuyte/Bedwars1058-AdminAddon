@@ -1,12 +1,11 @@
-package me.zuyte.admin.commands.subcommands;
+package me.zuyte.admin.command.bw1058.subcommands;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.NextEvent;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.utils.TextUtils;
-import org.bukkit.ChatColor;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
