@@ -1,6 +1,6 @@
 package me.zuyte.admin.command.bw1058;
 
-import me.zuyte.admin.command.bw1058.subcommands.*;
+import me.zuyte.admin.command.bw1058.subcommand.*;
 import me.zuyte.admin.util.TextUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,13 +1,6 @@
 package me.zuyte.admin;
 
 import com.andrei1058.bedwars.api.BedWars;
-import me.zuyte.admin.command.bw1058.AdminCommand;
-import me.zuyte.admin.command.bw1058.AdminTabComplete;
-import me.zuyte.admin.command.proxy.AdminProxyTabComplete;
-import me.zuyte.admin.storage.Messages;
-import me.zuyte.admin.command.bw1058.subcommands.AdminBWSubCommand;
-import me.zuyte.admin.command.proxy.AdminProxyCommand;
-import me.zuyte.admin.listener.*;
 import me.zuyte.admin.support.BW1058;
 import me.zuyte.admin.support.BW2023;
 import me.zuyte.admin.support.BWProxy;

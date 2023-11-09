@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.bw1058.subcommands;
+package me.zuyte.admin.command.bw1058.subcommand;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
@@ -92,7 +92,23 @@ public class SetBedSubCommand {
         TextUtils.sendDefaultConfigString("usage.setbed", c);
     }
 
-    private void placeBed(Location loc, BlockFace face) {
+    private void placeBed_1_8(Location loc, BlockFace face) {
+
+        BlockState bedFoot = loc.getBlock().getState();
+        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
+
+        bedFoot.setType(Material.BED_BLOCK);
+        bedHead.setType(Material.BED_BLOCK);
+
+        bedFoot.setRawData((byte) face.ordinal());
+        bedHead.setRawData((byte) (face.ordinal() + 8));
+
+        bedFoot.update(true, false);
+        bedHead.update(true, true);
+
+    }
+
+    private void placeBed_1_14(Location loc, BlockFace face) {
 
         BlockState bedFoot = loc.getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
@@ -109,3 +125,4 @@ public class SetBedSubCommand {
     }
 
 }
+

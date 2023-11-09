@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.bw1058.subcommands;
+package me.zuyte.admin.command.bw1058.subcommand;
 
 import com.google.common.base.Joiner;
 import me.zuyte.admin.Admin;

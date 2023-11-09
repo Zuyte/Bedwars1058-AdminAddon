@@ -1,4 +1,4 @@
-package me.zuyte.admin.listener;
+package me.zuyte.admin.listener.bw1058;
 
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.events.gameplay.TeamAssignEvent;

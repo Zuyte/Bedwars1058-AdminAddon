@@ -1,11 +1,12 @@
 package me.zuyte.admin.support;
 
+import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.language.Language;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.command.bw1058.AdminCommand;
 import me.zuyte.admin.command.bw1058.AdminTabComplete;
-import me.zuyte.admin.command.bw1058.subcommands.AdminBWSubCommand;
-import me.zuyte.admin.listener.*;
+import me.zuyte.admin.command.bw1058.subcommand.AdminBWSubCommand;
+import me.zuyte.admin.listener.bw1058.*;
 import me.zuyte.admin.storage.Messages;
 import org.bukkit.Bukkit;
 
@@ -13,6 +14,7 @@ public class BW1058 implements IBedWars {
     private final Admin instance;
     public BW1058(Admin instance) {
         this.instance = instance;
+        instance.bw = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
     }
     @Override
     public void setupMessages() {

@@ -1,5 +1,6 @@
 package me.zuyte.admin.support;
 
+import com.andrei1058.bedwars.proxy.api.BedWars;
 import com.andrei1058.bedwars.proxy.api.Language;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.command.proxy.AdminProxyCommand;
@@ -12,7 +13,7 @@ public class BWProxy implements IBedWars {
     public BWProxy(Admin instance) {
         this.instance = instance;
         instance.isBedWarsProxy = true;
-        instance.bwProxy = Bukkit.getServicesManager().getRegistration(com.andrei1058.bedwars.proxy.api.BedWars.class).getProvider();
+        instance.bwProxy = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
     }
     @Override
     public void setupMessages() {

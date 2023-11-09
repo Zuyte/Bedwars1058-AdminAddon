@@ -1,4 +1,4 @@
-package me.zuyte.admin.listener;
+package me.zuyte.admin.listener.bw1058;
 
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache;

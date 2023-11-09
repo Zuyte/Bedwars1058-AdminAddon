@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.bw1058.subcommands;
+package me.zuyte.admin.command.bw1058.subcommand;
 
 import com.andrei1058.bedwars.api.command.ParentCommand;
 import com.andrei1058.bedwars.api.command.SubCommand;
