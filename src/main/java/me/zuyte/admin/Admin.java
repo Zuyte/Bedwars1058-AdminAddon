@@ -5,7 +5,7 @@ import me.zuyte.admin.support.BW1058;
 import me.zuyte.admin.support.BW2023;
 import me.zuyte.admin.support.BWProxy;
 import me.zuyte.admin.support.IBedWars;
-import me.zuyte.admin.util.TextUtils;
+import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

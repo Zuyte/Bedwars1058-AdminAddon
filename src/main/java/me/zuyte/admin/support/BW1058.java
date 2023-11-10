@@ -3,10 +3,10 @@ package me.zuyte.admin.support;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.language.Language;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.command.bw1058.AdminCommand;
-import me.zuyte.admin.command.bw1058.AdminTabComplete;
-import me.zuyte.admin.subcommand.bw1058.AdminBWSubCommand;
-import me.zuyte.admin.listener.bw1058.*;
+import me.zuyte.admin.commands.bw1058.AdminCommand;
+import me.zuyte.admin.commands.bw1058.AdminTabComplete;
+import me.zuyte.admin.subcommands.bw1058.AdminBWSubCommand;
+import me.zuyte.admin.listeners.bw1058.*;
 import me.zuyte.admin.storage.Messages;
 import org.bukkit.Bukkit;
 

@@ -4,11 +4,11 @@ import com.tomkeuper.bedwars.api.BedWars;
 import com.tomkeuper.bedwars.api.addon.Addon;
 import com.tomkeuper.bedwars.api.language.Language;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.command.bw2023.AdminCommand;
-import me.zuyte.admin.command.bw2023.AdminTabComplete;
-import me.zuyte.admin.listener.bw2023.*;
+import me.zuyte.admin.commands.bw2023.AdminCommand;
+import me.zuyte.admin.commands.bw2023.AdminTabComplete;
+import me.zuyte.admin.listeners.bw2023.*;
 import me.zuyte.admin.storage.Messages;
-import me.zuyte.admin.subcommand.bw2023.AdminBWSubCommand;
+import me.zuyte.admin.subcommands.bw2023.AdminBWSubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
