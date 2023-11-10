@@ -33,7 +33,7 @@ public class PlayerListener implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
             if (e.getDamager() instanceof LivingEntity) {
-                if (e.getDamager().getCustomName().equals(ChatColor.RED + e.getEntity().getName() + "'s Enemy")) {
+                if (e.getDamager().getCustomName() != null && e.getDamager().getCustomName().equals(ChatColor.RED + e.getEntity().getName() + "'s Enemy")) {
                     e.setCancelled(false);
                 }
             }
