@@ -74,14 +74,17 @@ public class Messages {
             lang.set(ADDON_PATH + "defaults.arena-group-not-found", "&cArena/Group not found");
 
         // Usage Messages
-        if (!lang.exists(ADDON_PATH + "usage.forcejoin")) {
+        if (!lang.exists(ADDON_PATH + "usage.forcejoin"))
             lang.set(ADDON_PATH + "usage.forcejoin", "&cUsage: /bwa forcejoin <player> <arena>");
-        }
 
         // Player Messages
-        lang.set(ADDON_PATH + "player-message.force-join", "&aYou were force joined to {world}");
+        if (!lang.exists(ADDON_PATH + "player-message.force-join-success"))
+            lang.set(ADDON_PATH + "player-message.force-join-success", "&aForce joined {player} to {world}");
+        if (!lang.exists(ADDON_PATH + "player-message.force-join"))
+            lang.set(ADDON_PATH + "player-message.force-join", "&aYou were force joined to {world}");
     }
 
+    // BW1058 Messages
     public static String getPlayerBedWars1058Message(String path, Player player) {
         Language lang = Admin.getInstance().bw1058.getPlayerLanguage(player);
         if (lang.exists(".addons.admin." + path))
@@ -98,6 +101,7 @@ public class Messages {
             return "";
     }
 
+    // BW2023 Messages
     public static String getPlayerBedWars2023Message(String path, Player player) {
         com.tomkeuper.bedwars.api.language.Language lang = Admin.getInstance().bw2023.getPlayerLanguage(player);
         if (lang.exists(".addons.admin." + path))
@@ -110,6 +114,15 @@ public class Messages {
         com.tomkeuper.bedwars.api.language.Language lang = Admin.getInstance().bw2023.getDefaultLang();
         if (lang.exists(".addons.admin." + path))
             return lang.getString(".addons.admin." + path);
+        else
+            return "";
+    }
+
+    // BWProxy Messages
+    public static String getDefaultProxyMessage(String path) {
+        com.andrei1058.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy.getLanguageUtil().getDefaultLanguage();
+        if (lang.exists(".addons.admin." + path))
+            return lang.getMsg(".addons.admin." + path);
         else
             return "";
     }

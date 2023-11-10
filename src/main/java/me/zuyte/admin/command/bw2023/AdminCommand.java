@@ -34,7 +34,7 @@ public class AdminCommand implements CommandExecutor {
                 new TrollSubCommand(sender, args);
                 return true;
             }
-            TextUtils.sendDefaultConfigStringBW1058("admin-message.team.not-found", sender);
+            TextUtils.sendDefaultConfigStringBW1058("defaults.unknown-command", sender);
         }
         return true;
     }

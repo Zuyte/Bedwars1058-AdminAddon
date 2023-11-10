@@ -2,6 +2,7 @@ package me.zuyte.admin.command.bwproxy;
 
 import me.zuyte.admin.subcommand.bwproxy.ForceJoinProxySubCommand;
 import me.zuyte.admin.subcommand.bwproxy.HelpProxySubCommand;
+import me.zuyte.admin.util.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +12,6 @@ import org.bukkit.entity.Player;
 public class AdminProxyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player p = (Player) sender;
         if (args.length == 0) {
             new HelpProxySubCommand(sender);
             return true;
@@ -23,7 +23,7 @@ public class AdminProxyCommand implements CommandExecutor {
                 new ForceJoinProxySubCommand(sender, args);
                 return true;
             }
-            p.sendMessage(ChatColor.RED + "Command not found.");
+            TextUtils.sendDefaultConfigStringBWProxy("defaults.unknown-command", sender);
             return true;
         }
         return true;
