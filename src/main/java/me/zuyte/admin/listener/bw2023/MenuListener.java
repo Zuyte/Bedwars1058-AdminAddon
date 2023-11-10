@@ -24,25 +24,25 @@ public class MenuListener implements Listener {
             return;
         }
 
-        if (!Admin.getInstance().bw1058.getVersionSupport().isCustomBedWarsItem(e.getCurrentItem()) || !Admin.getInstance().bw1058.getVersionSupport().getCustomData(e.getCurrentItem()).equals("bwa-team-selector")) {
+        if (!Admin.getInstance().bw2023.getVersionSupport().isCustomBedWarsItem(e.getCurrentItem()) || !Admin.getInstance().bw2023.getVersionSupport().getCustomData(e.getCurrentItem()).equals("bwa-team-selector")) {
             return;
         }
         e.setCancelled(true);
         Player p = (Player) e.getWhoClicked();
-        IArena arena = Admin.getInstance().bw1058.getArenaUtil().getArenaByPlayer(p);
+        IArena arena = Admin.getInstance().bw2023.getArenaUtil().getArenaByPlayer(p);
         String teamName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
         ITeam team = arena.getTeam(teamName);
         if (arena.getTeam(teamName) == null) {
-            TextUtils.sendPlayerConfigStringBW1058("admin-message.team.not-found", p);
+            TextUtils.sendPlayerConfigStringBW2023("admin-message.team.not-found", p);
             return;
         }
         if (team.getMembers().size() == arena.getMaxInTeam()) {
-            TextUtils.sendPlayerConfigStringBW1058("admin-message.team.full", p);
+            TextUtils.sendPlayerConfigStringBW2023("admin-message.team.full", p);
             return;
         }
 
         Cache_BW2023.setPlayerTeam(p, team);
-        p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.team.success", p).replace("{player}", p.getName()).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw1058.getPlayerLanguage(p))));
+        p.sendMessage(TextUtils.getPlayerConfigStringBW2023("admin-message.team.success", p).replace("{player}", p.getName()).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw2023.getPlayerLanguage(p))));
         p.closeInventory();
     }
 }

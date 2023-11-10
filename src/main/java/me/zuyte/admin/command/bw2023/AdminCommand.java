@@ -34,7 +34,7 @@ public class AdminCommand implements CommandExecutor {
                 new TrollSubCommand(sender, args);
                 return true;
             }
-            TextUtils.sendDefaultConfigStringBW1058("defaults.unknown-command", sender);
+            TextUtils.sendDefaultConfigStringBW2023("defaults.unknown-command", sender);
         }
         return true;
     }

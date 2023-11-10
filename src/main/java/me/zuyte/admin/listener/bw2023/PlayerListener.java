@@ -39,7 +39,7 @@ public class PlayerListener implements Listener {
             }
             if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
                 if (e.getDamager().getType() == EntityType.FIREBALL) {
-                    if (Admin.getInstance().bw1058.getArenaUtil().getArenaByPlayer(((Player) e.getEntity()).getPlayer()).isReSpawning(((Player) e.getEntity()).getPlayer()) || Admin.getInstance().bw1058.getArenaUtil().getArenaByPlayer(((Player) e.getEntity()).getPlayer()).isSpectator(((Player) e.getEntity()).getPlayer())) return;
+                    if (Admin.getInstance().bw2023.getArenaUtil().getArenaByPlayer(((Player) e.getEntity()).getPlayer()).isReSpawning(((Player) e.getEntity()).getPlayer()) || Admin.getInstance().bw2023.getArenaUtil().getArenaByPlayer(((Player) e.getEntity()).getPlayer()).isSpectator(((Player) e.getEntity()).getPlayer())) return;
                     e.setCancelled(false);
                 }
             }
