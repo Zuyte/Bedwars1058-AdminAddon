@@ -25,7 +25,8 @@ public class HelpSubCommand {
         helpMessage.add(TextUtils.getColoredString("&r "));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa forcejoin <player> <arena/group> &8- &eForce join player into a arena"));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa setteam <player> <team> &8- &eSet the player's team"));
-        helpMessage.add(TextUtils.getColoredString("&6• &7/bwa setbed <player> <true/false> &8 &eSet a team's bed status"));
+        helpMessage.add(TextUtils.getColoredString("&6• &7/bwa setbed <player> <true/false> &8- &eSet a team's bed status"));
+        helpMessage.add(TextUtils.getColoredString("&6• &7/bwa revive <player> <final/bed> &8- &eRevive a player"));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa nextevent <arena> <event> &8- &eSet an arena's next event"));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa skipevent <arena> &8- &eSkip upcoming event"));
         helpMessage.add(TextUtils.getColoredString("&r "));

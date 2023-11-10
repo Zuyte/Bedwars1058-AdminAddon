@@ -27,6 +27,8 @@ public class Messages {
         yaml.addDefault(ADDON_PATH + "player-message.mlg.start", "&bMLG!!!");
         yaml.addDefault(ADDON_PATH + "player-message.mlg.success", "&aSuccess!");
         yaml.addDefault(ADDON_PATH + "player-message.mlg.fail", "&cFailed!");
+        yaml.addDefault(ADDON_PATH + "player-message.revive.title", "&bRevived");
+        yaml.addDefault(ADDON_PATH + "player-message.revive.subtitle", "&cBy {player}");
 
         // Admin Messages
         yaml.addDefault(ADDON_PATH + "admin-message.force-join", "&aForce joined {player} to {world}");
@@ -34,6 +36,7 @@ public class Messages {
         yaml.addDefault(ADDON_PATH + "admin-message.team.not-found", "&cCan't find team");
         yaml.addDefault(ADDON_PATH + "admin-message.team.full", "&cTeam is full");
         yaml.addDefault(ADDON_PATH + "admin-message.team.error-after-start", "&cCan't change player's team after the game has been started");
+        yaml.addDefault(ADDON_PATH + "admin-message.revive.success", "&aSuccessfully revived {player}");
         yaml.addDefault(ADDON_PATH + "admin-message.nextevent.error", "&cEvent does not exist");
         yaml.addDefault(ADDON_PATH + "admin-message.skipevent.error", "&cYou are already at the last event");
 
@@ -52,6 +55,7 @@ public class Messages {
         yaml.addDefault(ADDON_PATH + "usage.setbed", "&cUsage: /bwa setbed <player> <true/false>");
         yaml.addDefault(ADDON_PATH + "usage.nextevent", "&cUsage: /bwa nextevent <arena> <event>");
         yaml.addDefault(ADDON_PATH + "usage.skipevent", "&cUsage: /bwa skipevent <arena>");
+        yaml.addDefault(ADDON_PATH + "usage.revive", "&cUsage: /bw revive <player> <final/bed>");
         yaml.addDefault(ADDON_PATH + "usage.troll-mlg", "&cUsage: /bwa troll mlg <player>");
         yaml.addDefault(ADDON_PATH + "usage.troll-cage", "&cUsage: /bwa troll cage <player>");
         yaml.addDefault(ADDON_PATH + "usage.troll-blind", "&cUsage: /bwa troll blind <player> <seconds>");

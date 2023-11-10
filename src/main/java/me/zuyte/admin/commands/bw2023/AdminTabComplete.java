@@ -21,10 +21,10 @@ public class AdminTabComplete implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("bwa")) {
             if (args.length == 1) {
-                return Arrays.asList("help", "forcejoin", "setteam", "setbed", "skipevent", "nextevent", "troll");
+                return Arrays.asList("help", "forcejoin", "setteam", "setbed", "skipevent", "nextevent", "troll", "revive");
             }
             if (args.length == 2) {
-                if (args[0].equalsIgnoreCase("forcejoin") || args[0].equalsIgnoreCase("setteam") || args[0].equalsIgnoreCase("setbed")) {
+                if (args[0].equalsIgnoreCase("forcejoin") || args[0].equalsIgnoreCase("setteam") || args[0].equalsIgnoreCase("setbed") || args[0].equalsIgnoreCase("revive")) {
                     List<String> playerNames = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         playerNames.add(player.getName());
@@ -48,9 +48,9 @@ public class AdminTabComplete implements TabCompleter {
                     }
                     return arenaNames;
                 }
-//            if (args[0].equalsIgnoreCase("revive")) {
-//                return Arrays.asList("final", "bed");
-//            }
+            if (args[0].equalsIgnoreCase("revive")) {
+                return Arrays.asList("final", "bed");
+            }
                 if (args[0].equalsIgnoreCase("setbed")) {
                     return Arrays.asList("true", "false");
                 }

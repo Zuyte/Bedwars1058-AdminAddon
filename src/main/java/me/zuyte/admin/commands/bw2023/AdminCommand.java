@@ -33,6 +33,9 @@ public class AdminCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("troll")) {
                 new TrollSubCommand(sender, args);
                 return true;
+            } else if (args[0].equalsIgnoreCase("revive")) {
+                new ReviveSubCommand(sender, args);
+                return true;
             }
             TextUtils.sendDefaultConfigStringBW2023("defaults.unknown-command", sender);
         }
