@@ -1,7 +1,7 @@
-package me.zuyte.admin.listener.bw1058;
+package me.zuyte.admin.listener.bw2023;
 
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.storage.Cache_BW2023;
 import me.zuyte.admin.util.ExtraUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -49,9 +49,9 @@ public class PlayerListener implements Listener {
     public void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                if (Cache_BW1058.containsKaboomCache((Player) e.getEntity())) {
+                if (Cache_BW2023.containsKaboomCache((Player) e.getEntity())) {
                     e.setCancelled(true);
-                    Cache_BW1058.removeKaboomCache((Player) e.getEntity());
+                    Cache_BW2023.removeKaboomCache((Player) e.getEntity());
                 }
             }
         }
@@ -85,20 +85,20 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void onWBDeath(PlayerDeathEvent e) {
-        if (Cache_BW1058.containsMLGCache(e.getEntity())) {
-            Cache_BW1058.removeMLGCache(e.getEntity());
+        if (Cache_BW2023.containsMLGCache(e.getEntity())) {
+            Cache_BW2023.removeMLGCache(e.getEntity());
             e.getEntity().sendMessage(ChatColor.RED + "Failed!");
         }
     }
     @EventHandler
     public void onWBPlace(PlayerBucketEmptyEvent e) {
-        if (Cache_BW1058.containsMLGCache(e.getPlayer())) {
+        if (Cache_BW2023.containsMLGCache(e.getPlayer())) {
             if (e.getBucket() == Material.WATER_BUCKET) {
                 e.getPlayer().setFallDistance(0);
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(ChatColor.GREEN + "Success!");
-                e.getPlayer().setItemInHand(Cache_BW1058.getMLGCache(e.getPlayer()));
-                Cache_BW1058.removeMLGCache(e.getPlayer());
+                e.getPlayer().setItemInHand(Cache_BW2023.getMLGCache(e.getPlayer()));
+                Cache_BW2023.removeMLGCache(e.getPlayer());
             }
         }
     }

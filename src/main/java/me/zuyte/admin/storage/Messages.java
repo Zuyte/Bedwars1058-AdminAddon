@@ -82,16 +82,32 @@ public class Messages {
         lang.set(ADDON_PATH + "player-message.force-join", "&aYou were force joined to {world}");
     }
 
-    public static String getPlayerBedWarsMessage(String path, Player player) {
-        Language lang = Admin.getInstance().bw.getPlayerLanguage(player);
+    public static String getPlayerBedWars1058Message(String path, Player player) {
+        Language lang = Admin.getInstance().bw1058.getPlayerLanguage(player);
         if (lang.exists(".addons.admin." + path))
             return lang.getString(".addons.admin." + path);
         else
             return "";
     }
 
-    public static String getDefaultBedWarsMessage(String path) {
-        Language lang = Admin.getInstance().bw.getDefaultLang();
+    public static String getDefaultBedWars1058Message(String path) {
+        Language lang = Admin.getInstance().bw1058.getDefaultLang();
+        if (lang.exists(".addons.admin." + path))
+            return lang.getString(".addons.admin." + path);
+        else
+            return "";
+    }
+
+    public static String getPlayerBedWars2023Message(String path, Player player) {
+        com.tomkeuper.bedwars.api.language.Language lang = Admin.getInstance().bw2023.getPlayerLanguage(player);
+        if (lang.exists(".addons.admin." + path))
+            return lang.getString(".addons.admin." + path);
+        else
+            return "";
+    }
+
+    public static String getDefaultBedWars2023Message(String path) {
+        com.tomkeuper.bedwars.api.language.Language lang = Admin.getInstance().bw2023.getDefaultLang();
         if (lang.exists(".addons.admin." + path))
             return lang.getString(".addons.admin." + path);
         else

@@ -1,8 +1,8 @@
-package me.zuyte.admin.listener.bw1058;
+package me.zuyte.admin.listener.bw2023;
 
 import com.andrei1058.bedwars.teamselector.api.events.TeamSelectorChooseEvent;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.storage.Cache_BW2023;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -13,8 +13,8 @@ public class TeamSelectorListener implements Listener {
     }
     @EventHandler
     public void onTeamSelectorChoose(TeamSelectorChooseEvent e) {
-        if (Cache_BW1058.containsPlayerTeam(e.getPlayer())) {
-            if (Cache_BW1058.getPlayerTeam(e.getPlayer()).getArena().equals(e.getArena())) {
+        if (Cache_BW2023.containsPlayerTeam(e.getPlayer())) {
+            if (Cache_BW2023.getPlayerTeam(e.getPlayer()).getArena().equals(e.getArena())) {
                 e.setCancelled(true);
             }
         }

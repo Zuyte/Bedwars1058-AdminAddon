@@ -1,9 +1,9 @@
-package me.zuyte.admin.listener.bw1058;
+package me.zuyte.admin.listener.bw2023;
 
-import com.andrei1058.bedwars.api.arena.team.ITeam;
-import com.andrei1058.bedwars.api.events.gameplay.TeamAssignEvent;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.events.gameplay.TeamAssignEvent;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.storage.Cache_BW2023;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -15,8 +15,8 @@ public class TeamAssignerListener implements Listener {
 
     @EventHandler
     public void onTeamAssign(TeamAssignEvent e) {
-        if (Cache_BW1058.containsPlayerTeam(e.getPlayer())) {
-            ITeam team = Cache_BW1058.getPlayerTeam(e.getPlayer());
+        if (Cache_BW2023.containsPlayerTeam(e.getPlayer())) {
+            ITeam team = Cache_BW2023.getPlayerTeam(e.getPlayer());
             if (team.getArena().equals(e.getArena())) {
                 e.setCancelled(true);
                 team.addPlayers(e.getPlayer());

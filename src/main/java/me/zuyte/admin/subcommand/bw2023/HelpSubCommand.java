@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw2023;
 
 import com.google.common.base.Joiner;
 import me.zuyte.admin.Admin;
@@ -21,7 +21,7 @@ public class HelpSubCommand {
             return;
         }
         List<String> helpMessage = new ArrayList<>(Collections.emptyList());
-        helpMessage.add(TextUtils.getColoredString("&r\n&8&lþ &6BedWars1058 Admin v" + Admin.getInstance().getDescription().getVersion() + " &7- &cCommands"));
+        helpMessage.add(TextUtils.getColoredString("&r\n&8&lþ &6BedWars2023 Admin v" + Admin.getInstance().getDescription().getVersion() + " &7- &cCommands"));
         helpMessage.add(TextUtils.getColoredString("&r "));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa forcejoin <player> <arena/group> &8- &eForce join player into a arena"));
         helpMessage.add(TextUtils.getColoredString("&6• &7/bwa setteam <player> <team> &8- &eSet the player's team"));

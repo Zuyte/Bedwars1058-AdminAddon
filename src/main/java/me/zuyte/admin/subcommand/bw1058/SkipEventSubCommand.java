@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw1058;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class SkipEventSubCommand {
 
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw1058.getArenaUtil();
 
     public SkipEventSubCommand(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player)
@@ -23,12 +23,12 @@ public class SkipEventSubCommand {
 
     public void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.skipevent")) {
-            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
+            TextUtils.sendPlayerConfigStringBW1058("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                TextUtils.sendPlayerConfigString("defaults.arena-not-found", p);
+                TextUtils.sendPlayerConfigStringBW1058("defaults.arena-not-found", p);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
@@ -49,13 +49,13 @@ public class SkipEventSubCommand {
             } else if (arena.getNextEvent().equals(NextEvent.ENDER_DRAGON)) {
                 arena.setNextEvent(NextEvent.GAME_END);
             } else if (arena.getNextEvent().equals(NextEvent.GAME_END)) {
-                TextUtils.sendPlayerConfigString("admin-message.skipevent.error", p);
+                TextUtils.sendPlayerConfigStringBW1058("admin-message.skipevent.error", p);
                 return;
             }
-            TextUtils.sendPlayerConfigString("defaults.success", p);
+            TextUtils.sendPlayerConfigStringBW1058("defaults.success", p);
             return;
         }
-        TextUtils.sendPlayerConfigString("usage.skipevent", p);
+        TextUtils.sendPlayerConfigStringBW1058("usage.skipevent", p);
     }
 
     public void console(ConsoleCommandSender c, String[] args) {

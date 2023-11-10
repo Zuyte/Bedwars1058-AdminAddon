@@ -1,10 +1,10 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw2023;
 
-import com.andrei1058.bedwars.api.BedWars;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache;
+import me.zuyte.admin.storage.Cache_BW2023;
 import me.zuyte.admin.util.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 public class SetBedSubCommand {
 
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw2023.getArenaUtil();
 
     public SetBedSubCommand(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player)
@@ -28,17 +28,17 @@ public class SetBedSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.setbed")) {
-            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
+            TextUtils.sendPlayerConfigStringBW2023("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                TextUtils.sendPlayerConfigString("defaults.player-not-found", p);
+                TextUtils.sendPlayerConfigStringBW2023("defaults.player-not-found", p);
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player) == null) {
-                TextUtils.sendPlayerConfigString("player-not-joined-arena", p);
+                TextUtils.sendPlayerConfigStringBW2023("player-not-joined-arena", p);
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
@@ -46,19 +46,19 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache.getArenaBedsCache(playerTeam);
+                    BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
-                    TextUtils.sendPlayerConfigString("defaults.success", p);
+                    TextUtils.sendPlayerConfigStringBW2023("defaults.success", p);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(true);
-                    TextUtils.sendPlayerConfigString("defaults.success", p);
+                    TextUtils.sendPlayerConfigStringBW2023("defaults.success", p);
                     return;
                 }
             }
         }
-        TextUtils.sendPlayerConfigString("usage.setbed", p);
+        TextUtils.sendPlayerConfigStringBW2023("usage.setbed", p);
     }
 
     private void console(ConsoleCommandSender c, String[] args) {
@@ -77,7 +77,7 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache.getArenaBedsCache(playerTeam);
+                    BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
                     TextUtils.sendDefaultConfigString("defaults.success", c);
                     return;
@@ -92,7 +92,7 @@ public class SetBedSubCommand {
         TextUtils.sendDefaultConfigString("usage.setbed", c);
     }
 
-    private void placeBed_1_8(Location loc, BlockFace face) {
+    private void placeBed(Location loc, BlockFace face) {
 
         BlockState bedFoot = loc.getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
@@ -107,22 +107,5 @@ public class SetBedSubCommand {
         bedHead.update(true, true);
 
     }
-
-    private void placeBed_1_14(Location loc, BlockFace face) {
-
-        BlockState bedFoot = loc.getBlock().getState();
-        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-
-        bedFoot.setType(Material.BED_BLOCK);
-        bedHead.setType(Material.BED_BLOCK);
-
-        bedFoot.setRawData((byte) face.ordinal());
-        bedHead.setRawData((byte) (face.ordinal() + 8));
-
-        bedFoot.update(true, false);
-        bedHead.update(true, true);
-
-    }
-
 }
 

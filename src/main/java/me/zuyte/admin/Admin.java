@@ -13,7 +13,8 @@ public final class Admin extends JavaPlugin {
 
     private static Admin instance;
     public boolean isBedWarsProxy = false;
-    public BedWars bw;
+    public BedWars bw1058;
+    public com.tomkeuper.bedwars.api.BedWars bw2023;
     public com.andrei1058.bedwars.proxy.api.BedWars bwProxy;
     @Override
     public void onEnable() {
@@ -27,16 +28,15 @@ public final class Admin extends JavaPlugin {
         else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null)
             bwSupport = new BWProxy(this);
         else {
-            getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
+            getLogger().severe("Couldn't find a bedwars supported plugin. Disabling...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
-        // Hook into the support
+        // setup support
         bwSupport.setupMessages();
         bwSupport.setupCommands();
         bwSupport.initializeListeners();
-
         getServer().getConsoleSender().sendMessage(TextUtils.getColoredString("&aRunning BedWars1058-AdminAddon &fv" + getDescription().getVersion() + " &a(Type: " + (isBedWarsProxy ? "&cBedWarsProxy" : "&cBedWars") + "&a) &7- &eBy Zuyte"));
     }
 

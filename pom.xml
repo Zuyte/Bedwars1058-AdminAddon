@@ -98,5 +98,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/proxy-plugin-1.2.4.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.tomkeuper.bedwars</groupId>
+            <artifactId>bedwars-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/bedwars2023-1.0.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

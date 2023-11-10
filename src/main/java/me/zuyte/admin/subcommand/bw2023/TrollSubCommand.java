@@ -1,14 +1,20 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw2023;
 
-import com.andrei1058.bedwars.api.BedWars;
-import com.andrei1058.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.IArena;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache;
-import org.bukkit.*;
+import me.zuyte.admin.storage.Cache_BW2023;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +27,7 @@ import java.util.List;
 
 public class TrollSubCommand {
 
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw2023.getArenaUtil();
     public TrollSubCommand(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player)
             player((Player) commandSender, args);
@@ -51,7 +57,7 @@ public class TrollSubCommand {
                         playerLoc.setPitch(90);
                         playerLoc.setYaw(-90);
                         player.teleport(playerLoc);
-                        Cache.setMLGCache(player, player.getItemInHand());
+                        Cache_BW2023.setMLGCache(player, player.getItemInHand());
                         player.setItemInHand(new ItemStack(Material.WATER_BUCKET));
                         player.sendMessage(ChatColor.AQUA + "MLG TIME!!");
                         return;
@@ -214,7 +220,7 @@ public class TrollSubCommand {
                             p.sendMessage(ChatColor.RED + "Player is not playing");
                             return;
                         }
-                        Cache.addKaboomCache(player);
+                        Cache_BW2023.addKaboomCache(player);
                         Location playerLocation = player.getLocation();
                         player.setVelocity(new Vector(0, 35, 0));
                         player.getWorld().strikeLightningEffect(playerLocation);
@@ -368,7 +374,7 @@ public class TrollSubCommand {
                     playerLoc.setPitch(90);
                     playerLoc.setYaw(-90);
                     player.teleport(playerLoc);
-                    Cache.setMLGCache(player, player.getItemInHand());
+                    Cache_BW2023.setMLGCache(player, player.getItemInHand());
                     player.setItemInHand(new ItemStack(Material.WATER_BUCKET));
                     player.sendMessage(ChatColor.AQUA + "MLG TIME!!");
                     return;
@@ -531,7 +537,7 @@ public class TrollSubCommand {
                         p.sendMessage(ChatColor.RED + "Player is not playing");
                         return;
                     }
-                    Cache.addKaboomCache(player);
+                    Cache_BW2023.addKaboomCache(player);
                     Location playerLocation = player.getLocation();
                     player.setVelocity(new Vector(0, 35, 0));
                     player.getWorld().strikeLightningEffect(playerLocation);

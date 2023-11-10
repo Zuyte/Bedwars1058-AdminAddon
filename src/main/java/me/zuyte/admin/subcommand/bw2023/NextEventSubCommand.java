@@ -1,8 +1,8 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw2023;
 
-import com.andrei1058.bedwars.api.BedWars;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.NextEvent;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.NextEvent;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.util.TextUtils;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class NextEventSubCommand {
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw2023.getArenaUtil();
 
     public NextEventSubCommand(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player)
@@ -21,12 +21,12 @@ public class NextEventSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.nextevent")) {
-            TextUtils.sendPlayerConfigString("defaults.no-permission", p);
+            TextUtils.sendPlayerConfigStringBW2023("defaults.no-permission", p);
             return;
         }
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                TextUtils.sendPlayerConfigString("defaults.arena-not-found", p);
+                TextUtils.sendPlayerConfigStringBW2023("defaults.arena-not-found", p);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
@@ -55,13 +55,13 @@ public class NextEventSubCommand {
                     found = true;
                 }
                 if (found)
-                    TextUtils.sendPlayerConfigString("defaults.success", p);
+                    TextUtils.sendPlayerConfigStringBW2023("defaults.success", p);
                 else
-                    TextUtils.sendPlayerConfigString("admin-message.nextevent.error", p);
+                    TextUtils.sendPlayerConfigStringBW2023("admin-message.nextevent.error", p);
                 return;
             }
         }
-        TextUtils.sendPlayerConfigString("usage.nextevent", p);
+        TextUtils.sendPlayerConfigStringBW2023("usage.nextevent", p);
     }
 
     private void console(ConsoleCommandSender c, String[] args) {

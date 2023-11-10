@@ -1,11 +1,11 @@
-package me.zuyte.admin.command.bw1058.subcommand;
+package me.zuyte.admin.subcommand.bw1058;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache;
+import me.zuyte.admin.storage.Cache_BW1058;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class SetTeamSubCommand {
 
-    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw.getArenaUtil();
+    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw1058.getArenaUtil();
 
     public SetTeamSubCommand(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player)
@@ -64,7 +64,7 @@ public class SetTeamSubCommand {
                     p.sendMessage(ChatColor.RED + "Team is full!");
                     return;
                 }
-                Cache.setPlayerTeam(player, playerTeam);
+                Cache_BW1058.setPlayerTeam(player, playerTeam);
                 playerTeam.addPlayers(player);
                 p.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
                 return;
@@ -110,7 +110,7 @@ public class SetTeamSubCommand {
                     c.sendMessage(ChatColor.RED + "Team is full!");
                     return;
                 }
-                Cache.setPlayerTeam(player, playerTeam);
+                Cache_BW1058.setPlayerTeam(player, playerTeam);
                 playerTeam.addPlayers(player);
                 c.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
                 return;
@@ -136,7 +136,7 @@ public class SetTeamSubCommand {
             lore.add(ChatColor.GRAY + "•" + ChatColor.GREEN + " Click to select team!");
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
-            ItemStack newItemStack = Admin.getInstance().bw.getVersionSupport().addCustomData(itemStack, "bwa-team-selector");
+            ItemStack newItemStack = Admin.getInstance().bw1058.getVersionSupport().addCustomData(itemStack, "bwa-team-selector");
             inventory.setItem(i, newItemStack);
         }
         player.openInventory(inventory);

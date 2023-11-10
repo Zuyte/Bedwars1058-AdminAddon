@@ -1,9 +1,9 @@
-package me.zuyte.admin.listener.bw1058;
+package me.zuyte.admin.listener.bw2023;
 
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.storage.Cache_BW2023;
 import me.zuyte.admin.util.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,7 +41,7 @@ public class MenuListener implements Listener {
             return;
         }
 
-        Cache_BW1058.setPlayerTeam(p, team);
+        Cache_BW2023.setPlayerTeam(p, team);
         p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.team.success", p).replace("{player}", p.getName()).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw1058.getPlayerLanguage(p))));
         p.closeInventory();
     }

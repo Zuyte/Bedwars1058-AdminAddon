@@ -28,18 +28,28 @@ public class TextUtils {
         return ret;
     }
 
-    public static String getPlayerConfigString(String path, Player player) {
-        return getColoredString(Messages.getPlayerBedWarsMessage(path, player));
+    public static String getPlayerConfigStringBW1058(String path, Player player) {
+        return getColoredString(Messages.getPlayerBedWars1058Message(path, player));
     }
 
-    public static void sendPlayerConfigString(String path, Player player) {
-        String msg = getPlayerConfigString(path, player);
+    public static void sendPlayerConfigStringBW1058(String path, Player player) {
+        String msg = getPlayerConfigStringBW1058(path, player);
+        if (!msg.isEmpty())
+            player.sendMessage(msg);
+    }
+
+    public static String getPlayerConfigStringBW2023(String path, Player player) {
+        return getColoredString(Messages.getPlayerBedWars2023Message(path, player));
+    }
+
+    public static void sendPlayerConfigStringBW2023(String path, Player player) {
+        String msg = getPlayerConfigStringBW2023(path, player);
         if (!msg.isEmpty())
             player.sendMessage(msg);
     }
 
     public static String getDefaultConfigString(String path) {
-        return getColoredString(Messages.getDefaultBedWarsMessage(path));
+        return getColoredString(Messages.getDefaultBedWars1058Message(path));
     }
 
     public static void sendDefaultConfigString(String path, CommandSender sender) {

@@ -1,8 +1,8 @@
-package me.zuyte.admin.command.bw1058;
+package me.zuyte.admin.command.bw2023;
 
-import com.andrei1058.bedwars.api.BedWars;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -32,7 +32,7 @@ public class AdminTabComplete implements TabCompleter {
                     return playerNames;
                 } else if (args[0].equalsIgnoreCase("nextevent") || args[0].equalsIgnoreCase("skipevent")) {
                     List<String> arenaNames = new ArrayList<>();
-                    for (IArena arena : Admin.getInstance().bw1058.getArenaUtil().getArenas()) {
+                    for (IArena arena : Admin.getInstance().bw2023.getArenaUtil().getArenas()) {
                         arenaNames.add(arena.getArenaName());
                     }
                     return arenaNames;
@@ -43,7 +43,7 @@ public class AdminTabComplete implements TabCompleter {
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("forcejoin")) {
                     List<String> arenaNames = new ArrayList<>();
-                    for (IArena arena : Admin.getInstance().bw1058.getArenaUtil().getArenas()) {
+                    for (IArena arena : Admin.getInstance().bw2023.getArenaUtil().getArenas()) {
                         arenaNames.add(arena.getArenaName());
                     }
                     return arenaNames;
@@ -58,7 +58,7 @@ public class AdminTabComplete implements TabCompleter {
                     return Arrays.asList("diamond-2", "diamond-3", "emerald-2", "emerald-3", "bed-destroy", "dragon", "end");
                 }
                 if (args[0].equalsIgnoreCase("setteam")) {
-                    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw1058.getArenaUtil();
+                    BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw2023.getArenaUtil();
                     if (Bukkit.getPlayerExact(args[1]) != null && arenaUtil.getArenaByPlayer(Bukkit.getPlayerExact(args[1])) != null) {
                         Player player = Bukkit.getPlayerExact(args[1]);
                         List<String> teamNames = new ArrayList<>();

@@ -6,14 +6,14 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
-public class Cache {
+public class Cache_BW1058 {
     private static Map<Player, ITeam> playerTeamCache = new HashMap<>();
     private static Map<Player, ItemStack> playerMLGCache = new HashMap<>();
-    private static ArrayList<Player> playerKaboomCache = new ArrayList<>();
+    private static HashSet<Player> playerKaboomCache = new HashSet<>();
     private static Map<ITeam, BlockFace> arenaBedsCache = new HashMap<>();
 
     public static void setPlayerTeam(Player player, ITeam team) {
