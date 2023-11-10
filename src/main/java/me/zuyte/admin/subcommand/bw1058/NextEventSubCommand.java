@@ -67,7 +67,7 @@ public class NextEventSubCommand {
     private void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                TextUtils.sendDefaultConfigString("defaults.arena-not-found", c);
+                TextUtils.sendDefaultConfigStringBW1058("defaults.arena-not-found", c);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
@@ -96,13 +96,13 @@ public class NextEventSubCommand {
                     found = true;
                 }
                 if (found)
-                    TextUtils.sendDefaultConfigString("defaults.success", c);
+                    TextUtils.sendDefaultConfigStringBW1058("defaults.success", c);
                 else
-                    TextUtils.sendDefaultConfigString("admin-message.nextevent.error", c);
+                    TextUtils.sendDefaultConfigStringBW1058("admin-message.nextevent.error", c);
                 return;
             }
         }
-        TextUtils.sendDefaultConfigString("usage.nextevent", c);
+        TextUtils.sendDefaultConfigStringBW1058("usage.nextevent", c);
     }
 
 }

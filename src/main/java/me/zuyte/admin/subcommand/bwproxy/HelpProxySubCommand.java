@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.proxy;
+package me.zuyte.admin.subcommand.bwproxy;
 
 import com.google.common.base.Joiner;
 import me.zuyte.admin.Admin;

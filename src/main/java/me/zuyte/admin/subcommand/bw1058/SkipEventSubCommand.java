@@ -61,7 +61,7 @@ public class SkipEventSubCommand {
     public void console(ConsoleCommandSender c, String[] args) {
         if (args.length > 1) {
             if (arenaUtil.getArenaByName(args[1]) == null) {
-                TextUtils.sendDefaultConfigString("defaults.arena-not-found", c);
+                TextUtils.sendDefaultConfigStringBW1058("defaults.arena-not-found", c);
                 return;
             }
             IArena arena = arenaUtil.getArenaByName(args[1]);
@@ -82,12 +82,12 @@ public class SkipEventSubCommand {
             } else if (arena.getNextEvent().equals(NextEvent.ENDER_DRAGON)) {
                 arena.setNextEvent(NextEvent.GAME_END);
             } else if (arena.getNextEvent().equals(NextEvent.GAME_END)) {
-                TextUtils.sendDefaultConfigString("admin-message.skipevent.error", c);
+                TextUtils.sendDefaultConfigStringBW1058("admin-message.skipevent.error", c);
                 return;
             }
-            TextUtils.sendDefaultConfigString("defaults.success", c);
+            TextUtils.sendDefaultConfigStringBW1058("defaults.success", c);
             return;
         }
-        TextUtils.sendDefaultConfigString("usage.skipevent", c);
+        TextUtils.sendDefaultConfigStringBW1058("usage.skipevent", c);
     }
 }

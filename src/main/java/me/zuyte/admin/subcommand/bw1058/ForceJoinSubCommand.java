@@ -62,7 +62,7 @@ public class ForceJoinSubCommand {
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                TextUtils.sendDefaultConfigString("defaults.player-not-found", c);
+                TextUtils.sendDefaultConfigStringBW1058("defaults.player-not-found", c);
                 return;
             }
             if (args.length >= 3) {
@@ -76,7 +76,7 @@ public class ForceJoinSubCommand {
                     }
                 }
                 if (!isAGroup && arenaUtil.getArenaByName(arenaWorld) == null) {
-                    TextUtils.sendDefaultConfigString("defaults.arena-group-not-found", c);
+                    TextUtils.sendDefaultConfigStringBW1058("defaults.arena-group-not-found", c);
                     return;
                 }
                 if (!isAGroup)
@@ -84,11 +84,11 @@ public class ForceJoinSubCommand {
                 else
                     arenaUtil.joinRandomFromGroup(player, arenaWorld);
 
-                c.sendMessage(TextUtils.getDefaultConfigString("admin-message.force-join").replace("{player}", player.getName()).replace("{world}", arenaWorld));
+                c.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.force-join").replace("{player}", player.getName()).replace("{world}", arenaWorld));
                 player.sendMessage(TextUtils.getPlayerConfigStringBW1058("player-message.force-join", player).replace("{world}", arenaWorld));
                 return;
             }
         }
-        TextUtils.sendDefaultConfigString("usage.forcejoin", c);
+        TextUtils.sendDefaultConfigStringBW1058("usage.forcejoin", c);
     }
 }

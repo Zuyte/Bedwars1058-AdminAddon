@@ -1,4 +1,4 @@
-package me.zuyte.admin.command.proxy;
+package me.zuyte.admin.subcommand.bwproxy;
 
 import com.andrei1058.bedwars.proxy.api.CachedArena;
 import com.andrei1058.bedwars.proxy.arenamanager.ArenaManager;

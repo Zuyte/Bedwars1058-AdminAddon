@@ -1,5 +1,7 @@
-package me.zuyte.admin.command.proxy;
+package me.zuyte.admin.command.bwproxy;
 
+import me.zuyte.admin.subcommand.bwproxy.ForceJoinProxySubCommand;
+import me.zuyte.admin.subcommand.bwproxy.HelpProxySubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

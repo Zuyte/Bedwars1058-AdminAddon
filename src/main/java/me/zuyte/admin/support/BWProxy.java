@@ -3,8 +3,8 @@ package me.zuyte.admin.support;
 import com.andrei1058.bedwars.proxy.api.BedWars;
 import com.andrei1058.bedwars.proxy.api.Language;
 import me.zuyte.admin.Admin;
-import me.zuyte.admin.command.proxy.AdminProxyCommand;
-import me.zuyte.admin.command.proxy.AdminProxyTabComplete;
+import me.zuyte.admin.command.bwproxy.AdminProxyCommand;
+import me.zuyte.admin.command.bwproxy.AdminProxyTabComplete;
 import me.zuyte.admin.storage.Messages;
 import org.bukkit.Bukkit;
 

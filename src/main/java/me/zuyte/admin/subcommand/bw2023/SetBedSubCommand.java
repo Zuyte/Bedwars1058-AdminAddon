@@ -65,11 +65,11 @@ public class SetBedSubCommand {
         if (args.length > 1) {
             Player player = Bukkit.getPlayerExact(args[1]);
             if (player == null) {
-                TextUtils.sendDefaultConfigString("defaults.player-not-found", c);
+                TextUtils.sendDefaultConfigStringBW2023("defaults.player-not-found", c);
                 return;
             }
             if (arenaUtil.getArenaByPlayer(player) == null) {
-                TextUtils.sendDefaultConfigString("defaults.player-not-joined-arena", c);
+                TextUtils.sendDefaultConfigStringBW2023("defaults.player-not-joined-arena", c);
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
@@ -79,17 +79,17 @@ public class SetBedSubCommand {
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
-                    TextUtils.sendDefaultConfigString("defaults.success", c);
+                    TextUtils.sendDefaultConfigStringBW2023("defaults.success", c);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(true);
-                    TextUtils.sendDefaultConfigString("defaults.success", c);
+                    TextUtils.sendDefaultConfigStringBW2023("defaults.success", c);
                     return;
                 }
             }
         }
-        TextUtils.sendDefaultConfigString("usage.setbed", c);
+        TextUtils.sendDefaultConfigStringBW2023("usage.setbed", c);
     }
 
     private void placeBed(Location loc, BlockFace face) {
