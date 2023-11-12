@@ -47,7 +47,7 @@ public class SetBedSubCommand {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     TextUtils.sendPlayerConfigStringBW2023("defaults.success", p);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -78,7 +78,7 @@ public class SetBedSubCommand {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     TextUtils.sendDefaultConfigStringBW2023("defaults.success", c);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -92,20 +92,16 @@ public class SetBedSubCommand {
         TextUtils.sendDefaultConfigStringBW2023("usage.setbed", c);
     }
 
-    private void placeBed(Location loc, BlockFace face) {
-
-        BlockState bedFoot = loc.getBlock().getState();
+    private void placeBed(ITeam playerTeam) {
+        BlockFace face = Cache_BW2023.getArenaBedsCache(playerTeam);
+        BlockState bedFoot = playerTeam.getBed().getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-
         bedFoot.setType(Material.BED_BLOCK);
         bedHead.setType(Material.BED_BLOCK);
-
         bedFoot.setRawData((byte) face.ordinal());
         bedHead.setRawData((byte) (face.ordinal() + 8));
-
         bedFoot.update(true, false);
         bedHead.update(true, true);
-
     }
 }
 

@@ -52,8 +52,8 @@ public class Cache_BW2023 {
     public static void setArenaBedsCache(ITeam team, BlockFace blockFace) {
         arenaBedsCache.put(team, blockFace);
     }
-    public static void removeArenaBedsCache(IArena arena) {
-        arenaBedsCache.remove(arena);
+    public static void removeArenaBedsCache(ITeam team) {
+        arenaBedsCache.remove(team);
     }
     public static BlockFace getArenaBedsCache(ITeam team) {
         return arenaBedsCache.get(team);

@@ -9,11 +9,14 @@ import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.material.Bed;
+import org.bukkit.material.MaterialData;
 
 public class SetBedSubCommand {
 
@@ -46,8 +49,7 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache_BW1058.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     TextUtils.sendPlayerConfigStringBW1058("defaults.success", p);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -78,7 +80,7 @@ public class SetBedSubCommand {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW1058.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     TextUtils.sendDefaultConfigStringBW1058("defaults.success", c);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -92,20 +94,16 @@ public class SetBedSubCommand {
         TextUtils.sendDefaultConfigStringBW1058("usage.setbed", c);
     }
 
-    private void placeBed(Location loc, BlockFace face) {
-
-        BlockState bedFoot = loc.getBlock().getState();
+    private void placeBed(ITeam playerTeam) {
+        BlockFace face = Cache_BW1058.getArenaBedsCache(playerTeam);
+        BlockState bedFoot = playerTeam.getBed().getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-
         bedFoot.setType(Material.BED_BLOCK);
         bedHead.setType(Material.BED_BLOCK);
-
         bedFoot.setRawData((byte) face.ordinal());
         bedHead.setRawData((byte) (face.ordinal() + 8));
-
         bedFoot.update(true, false);
         bedHead.update(true, true);
-
     }
 }
 

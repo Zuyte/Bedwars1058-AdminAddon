@@ -12,6 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.material.Bed;
 
 public class ArenaListener implements Listener {
     private final Admin instance;
@@ -24,12 +25,17 @@ public class ArenaListener implements Listener {
             Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
                 for (Player player : e.getArena().getPlayers())
                     Cache_BW1058.setPlayerTeam(player, e.getArena().getTeam(player));
+                for (ITeam team : e.getArena().getTeams()) {
+                    if (team.isBedDestroyed()) continue;
+                    Bed bedBlock = ((Bed)team.getBed().getBlock().getState().getData());
+                    Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
+                }
             });
-            for (ITeam team : e.getArena().getTeams()) {
-                if (team.isBedDestroyed()) continue;
-                BlockFace targetFace = team.getBed().getBlock().getFace(team.getBed().getBlock());
-                Cache_BW1058.setArenaBedsCache(team, targetFace);
-            }
+        } else if (e.getNewState() == GameState.restarting) {
+            Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
+                for (ITeam team : e.getArena().getTeams())
+                    Cache_BW1058.removeArenaBedsCache(team);
+            });
         }
     }
 

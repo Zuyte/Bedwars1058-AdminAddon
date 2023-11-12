@@ -4,6 +4,7 @@ import com.tomkeuper.bedwars.api.BedWars;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
+import me.zuyte.admin.storage.Cache_BW1058;
 import me.zuyte.admin.storage.Cache_BW2023;
 import me.zuyte.admin.utils.TextUtils;
 import me.zuyte.admin.utils.TitleUtils;
@@ -50,7 +51,7 @@ public class ReviveSubCommand {
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     p.sendMessage(TextUtils.getPlayerConfigStringBW2023("admin-message.revive.success", p).replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
@@ -91,7 +92,7 @@ public class ReviveSubCommand {
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", c.getName()), 1, 6, 1);
                     playerTeam.setBedDestroyed(false);
                     BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
-                    placeBed(playerTeam.getBed(), targetFace.getOppositeFace());
+                    placeBed(playerTeam);
                     c.sendMessage(TextUtils.getDefaultConfigStringBW2023("admin-message.revive.success").replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
@@ -110,20 +111,16 @@ public class ReviveSubCommand {
         TextUtils.sendDefaultConfigStringBW2023("usage.revive", c);
     }
 
-    private void placeBed(Location loc, BlockFace face) {
-
-        BlockState bedFoot = loc.getBlock().getState();
+    private void placeBed(ITeam playerTeam) {
+        BlockFace face = Cache_BW2023.getArenaBedsCache(playerTeam);
+        BlockState bedFoot = playerTeam.getBed().getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-
         bedFoot.setType(Material.BED_BLOCK);
         bedHead.setType(Material.BED_BLOCK);
-
         bedFoot.setRawData((byte) face.ordinal());
         bedHead.setRawData((byte) (face.ordinal() + 8));
-
         bedFoot.update(true, false);
         bedHead.update(true, true);
-
     }
 
 }
