@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Cache_BW2023 {
     private static Map<Player, ITeam> playerTeamCache = new HashMap<>();
+    private static Map<Player, ITeam> playerPreviousTeamCache = new HashMap<>();
     private static Map<Player, ItemStack> playerMLGCache = new HashMap<>();
     private static HashSet<Player> playerKaboomCache = new HashSet<>();
     private static Map<ITeam, BlockFace> arenaBedsCache = new HashMap<>();
@@ -19,11 +20,17 @@ public class Cache_BW2023 {
     public static void setPlayerTeam(Player player, ITeam team) {
         playerTeamCache.put(player, team);
     }
+    public static void setPreviousPlayerTeam(Player player, ITeam team) {
+        playerPreviousTeamCache.put(player, team);
+    }
     public static void removePlayerTeam(Player player) {
         playerTeamCache.remove(player);
     }
     public static ITeam getPlayerTeam(Player player) {
         return playerTeamCache.get(player);
+    }
+    public static ITeam getPreviousPlayerTeam(Player player) {
+        return playerPreviousTeamCache.get(player);
     }
     public static boolean containsPlayerTeam(Player player) {
         return playerTeamCache.containsKey(player);

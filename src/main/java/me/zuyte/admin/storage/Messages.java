@@ -88,6 +88,28 @@ public class Messages {
             lang.set(ADDON_PATH + "player-message.force-join", "&aYou were force joined to {world}");
     }
 
+    public static void setupProxy2023Messages(com.tomkeuper.bedwars.proxy.api.Language lang) {
+        // Default Messages
+        if (!lang.exists(ADDON_PATH + "defaults.unknown-command"))
+            lang.set(ADDON_PATH + "defaults.unknown-command", "&cUnknown Command");
+        if (!lang.exists(ADDON_PATH + "defaults.no-permission"))
+            lang.set(ADDON_PATH + "defaults.no-permission", "&cYou don't have permission");
+        if (!lang.exists(ADDON_PATH + "defaults.player-not-found"))
+            lang.set(ADDON_PATH + "defaults.player-not-found", "&cPlayer not found");
+        if (!lang.exists(ADDON_PATH + "defaults.arena-group-not-found"))
+            lang.set(ADDON_PATH + "defaults.arena-group-not-found", "&cArena/Group not found");
+
+        // Usage Messages
+        if (!lang.exists(ADDON_PATH + "usage.forcejoin"))
+            lang.set(ADDON_PATH + "usage.forcejoin", "&cUsage: /bwa forcejoin <player> <arena>");
+
+        // Player Messages
+        if (!lang.exists(ADDON_PATH + "player-message.force-join-success"))
+            lang.set(ADDON_PATH + "player-message.force-join-success", "&aForce joined {player} to {world}");
+        if (!lang.exists(ADDON_PATH + "player-message.force-join"))
+            lang.set(ADDON_PATH + "player-message.force-join", "&aYou were force joined to {world}");
+    }
+
     // BW1058 Messages
     public static String getPlayerBedWars1058Message(String path, Player player) {
         Language lang = Admin.getInstance().bw1058.getPlayerLanguage(player);
@@ -133,6 +155,22 @@ public class Messages {
 
     public static String getPlayerProxyMessage(String path, Player player) {
         com.andrei1058.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy.getLanguageUtil().getPlayerLanguage(player);
+        if (lang.exists(".addons.admin." + path))
+            return lang.getMsg(".addons.admin." + path);
+        else
+            return "";
+    }
+
+    public static String getDefaultProxy2023Message(String path) {
+        com.tomkeuper.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy2023.getLanguageUtil().getDefaultLanguage();
+        if (lang.exists(".addons.admin." + path))
+            return lang.getMsg(".addons.admin." + path);
+        else
+            return "";
+    }
+
+    public static String getPlayerProxy2023Message(String path, Player player) {
+        com.tomkeuper.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy2023.getLanguageUtil().getPlayerLanguage(player);
         if (lang.exists(".addons.admin." + path))
             return lang.getMsg(".addons.admin." + path);
         else

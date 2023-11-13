@@ -105,5 +105,19 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/bedwars2023-1.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.tomkeuper.bedwars</groupId>
+            <artifactId>BWProxy2023</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/proxy-plugin2023-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.agent.teamselector</groupId>
+            <artifactId>teamselector</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/teamselector-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

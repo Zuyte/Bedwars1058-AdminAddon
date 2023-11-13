@@ -4,6 +4,8 @@ import com.tomkeuper.bedwars.api.BedWars;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.events.gameplay.TeamAssignEvent;
+import com.tomkeuper.bedwars.arena.Arena;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW2023;
 import org.bukkit.Bukkit;
@@ -12,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -67,14 +70,13 @@ public class SetTeamSubCommand {
                 Cache_BW2023.setPlayerTeam(player, playerTeam);
                 playerTeam.addPlayers(player);
                 p.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
-                return;
             } else {
                 if (playerArena.getTeam(player) != null) {
                     playerArena.getTeam(player).getMembers().remove(player);
                 }
                 setTeamGui(player, playerArena);
-                return;
             }
+            return;
         }
         p.sendMessage(ChatColor.RED + "Usage: /bw setteam <player> <team>");
     }
@@ -103,6 +105,7 @@ public class SetTeamSubCommand {
                 }
                 ITeam playerTeam = playerArena.getTeam(team);
                 if (playerArena.getTeam(player) != null) {
+                    Cache_BW2023.setPreviousPlayerTeam(player, playerArena.getTeam(player));
                     playerArena.getTeam(player).getMembers().remove(player);
                 }
 

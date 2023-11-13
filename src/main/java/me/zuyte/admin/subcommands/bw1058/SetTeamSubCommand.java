@@ -57,6 +57,7 @@ public class SetTeamSubCommand {
                 }
                 ITeam playerTeam = playerArena.getTeam(team);
                 if (playerArena.getTeam(player) != null) {
+                    Cache_BW1058.setPreviousPlayerTeam(player, playerArena.getTeam(player));
                     playerArena.getTeam(player).getMembers().remove(player);
                 }
 

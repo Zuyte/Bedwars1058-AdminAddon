@@ -16,6 +16,8 @@ public class TeamAssignerListener implements Listener {
     @EventHandler
     public void onTeamAssign(TeamAssignEvent e) {
         if (Cache_BW2023.containsPlayerTeam(e.getPlayer())) {
+            ITeam firstTeam = e.getTeam();
+            firstTeam.getMembers().remove(e.getPlayer());
             ITeam team = Cache_BW2023.getPlayerTeam(e.getPlayer());
             if (team.getArena().equals(e.getArena())) {
                 e.setCancelled(true);
