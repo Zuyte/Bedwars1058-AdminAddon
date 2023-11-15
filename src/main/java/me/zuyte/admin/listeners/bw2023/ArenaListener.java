@@ -22,6 +22,7 @@ public class ArenaListener implements Listener {
         if (e.getNewState() == GameState.playing) {
             for (Player player : e.getArena().getPlayers()) {
                 if (Cache_BW2023.getPlayerTeam(player) == null) continue;
+
                 Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
                     for (ITeam team : e.getArena().getTeams()) {
                         team.getMembers().remove(player);
@@ -35,13 +36,6 @@ public class ArenaListener implements Listener {
                 if (e.getArena().getTeam(player).getSize() == 0 || (e.getArena().getTeam(player).getMembers().contains(player) && e.getArena().getTeam(player).getMembers().size() == 1)) {
                     e.getArena().getTeam(player).setBedDestroyed(true);
                 }
-
-                Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
-                    if (e.getArena().getTeam(player) != Cache_BW2023.getPlayerTeam(player)) {
-                        if (e.getArena() != null) e.getArena().getTeam(player).getMembers().remove(player);
-                        Cache_BW2023.getPlayerTeam(player).addPlayers(player);
-                    }
-                });
             }
             for (ITeam team : e.getArena().getTeams()) {
                 if (team.isBedDestroyed()) continue;
