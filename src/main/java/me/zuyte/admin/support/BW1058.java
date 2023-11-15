@@ -18,8 +18,10 @@ public class BW1058 implements IBedWars {
     }
     @Override
     public void setupMessages() {
-        for (Language lang : Language.getLanguages())
+        for (Language lang : Language.getLanguages()) {
             Messages.setupBedWarsMessages(lang.getYml());
+            lang.save();
+        }
     }
 
     @Override
