@@ -43,8 +43,8 @@ public class BW2023 extends Addon implements IBedWars {
         instance.getServer().getPluginManager().registerEvents(new MenuListener(instance), instance);
         instance.getServer().getPluginManager().registerEvents(new TeamAssignerListener(instance), instance);
 
-        if (Bukkit.getPluginManager().getPlugin("BedWars1058-TeamSelector") != null) { // Trying to hook into TeamSelector Addon
-            instance.getLogger().info("Found BedWars1058-TeamSelector, Hooking into it...");
+        if (Bukkit.getPluginManager().getPlugin("BedWars2023-TeamSelector") != null) { // Trying to hook into TeamSelector Addon
+            instance.getLogger().info("Found BedWars2023-TeamSelector, Hooking into it...");
             instance.getServer().getPluginManager().registerEvents(new TeamSelectorListener(instance), instance);
         }
     }
@@ -67,7 +67,7 @@ public class BW2023 extends Addon implements IBedWars {
 
     @Override
     public String getName() {
-        return instance.getDescription().getName();
+        return "AdminAddon";
     }
 
     @Override

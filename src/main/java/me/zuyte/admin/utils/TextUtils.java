@@ -7,25 +7,14 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TextUtils {
     public static String getColoredString(String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
     public static List<String> getColoredStringList(List<String> msg) {
-        if (msg.size() == 1 && msg.get(0).equals("")) {
-            return msg;
-        }
-        List<String> ret = new ArrayList<String>();
-        try {
-            for (String line : msg) {
-                ret.add(ChatColor.translateAlternateColorCodes('&', line));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return ret;
+        return msg.stream().map(TextUtils::getColoredString).collect(Collectors.toList());
     }
 
     // BedWars1058
@@ -79,5 +68,21 @@ public class TextUtils {
     }
     public static void sendDefaultConfigStringBWProxy(String path, CommandSender sender) {
         sender.sendMessage(getDefaultConfigStringBWProxy(path));
+    }
+
+    public static String getPlayerConfigStringBWProxy2023(String path, Player player) {
+        return getColoredString(Messages.getPlayerProxy2023Message(path, player));
+    }
+    public static String getDefaultConfigStringBWProxy2023(String path) {
+        return getColoredString(Messages.getDefaultProxy2023Message(path));
+    }
+
+    public static void sendPlayerConfigStringBWProxy2023(String path, Player player) {
+        String msg = getPlayerConfigStringBWProxy2023(path, player);
+        if (!msg.isEmpty())
+            player.sendMessage(msg);
+    }
+    public static void sendDefaultConfigStringBWProxy2023(String path, CommandSender sender) {
+        sender.sendMessage(getDefaultConfigStringBWProxy2023(path));
     }
 }
