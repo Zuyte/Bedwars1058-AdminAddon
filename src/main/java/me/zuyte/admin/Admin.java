@@ -11,7 +11,6 @@ public final class Admin extends JavaPlugin {
     public boolean isBedWarsProxy = false;
     public com.andrei1058.bedwars.api.BedWars bw1058;
     public com.tomkeuper.bedwars.api.BedWars bw2023;
-    public com.andrei1058.bedwars.proxy.api.BedWars bwProxy;
     public com.tomkeuper.bedwars.proxy.api.BedWars bwProxy2023;
     @Override
     public void onEnable() {

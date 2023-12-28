@@ -22,7 +22,6 @@ public class ArenaListener implements Listener {
         if (e.getNewState() == GameState.playing) {
             for (Player player : e.getArena().getPlayers()) {
                 if (Cache_BW1058.getPlayerTeam(player) == null) continue;
-                Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
                     for (ITeam team : e.getArena().getTeams()) {
                         team.getMembers().remove(player);
                         if (Cache_BW1058.getPlayerTeam(player) == team) {
@@ -30,7 +29,6 @@ public class ArenaListener implements Listener {
                         }
                     }
                     Cache_BW1058.setPlayerTeam(player, e.getArena().getTeam(player));
-                });
 
                 if (e.getArena().getTeam(player).getSize() == 0 || (e.getArena().getTeam(player).getMembers().contains(player) && e.getArena().getTeam(player).getMembers().size() == 1)) {
                     e.getArena().getTeam(player).setBedDestroyed(true);
@@ -42,10 +40,8 @@ public class ArenaListener implements Listener {
                 Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
             }
         } else if (e.getNewState() == GameState.restarting) {
-            Bukkit.getScheduler().runTaskAsynchronously(Admin.getInstance(), () -> {
                 for (ITeam team : e.getArena().getTeams())
                     Cache_BW1058.removeArenaBedsCache(team);
-            });
         }
     }
 

@@ -1,6 +1,7 @@
 package me.zuyte.admin.storage;
 
 import com.andrei1058.bedwars.api.language.Language;
+import com.andrei1058.bedwars.proxy.language.LanguageManager;
 import me.zuyte.admin.Admin;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -146,7 +147,7 @@ public class Messages {
 
     // BWProxy Messages
     public static String getDefaultProxyMessage(String path) {
-        com.andrei1058.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy.getLanguageUtil().getDefaultLanguage();
+        com.andrei1058.bedwars.proxy.api.Language lang = LanguageManager.get().getDefaultLanguage();
         if (lang.exists(".addons.admin." + path))
             return lang.getMsg(".addons.admin." + path);
         else
@@ -154,7 +155,7 @@ public class Messages {
     }
 
     public static String getPlayerProxyMessage(String path, Player player) {
-        com.andrei1058.bedwars.proxy.api.Language lang = Admin.getInstance().bwProxy.getLanguageUtil().getPlayerLanguage(player);
+        com.andrei1058.bedwars.proxy.api.Language lang = LanguageManager.get().getPlayerLanguage(player);
         if (lang.exists(".addons.admin." + path))
             return lang.getMsg(".addons.admin." + path);
         else
