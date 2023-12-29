@@ -19,7 +19,10 @@ import org.bukkit.entity.Player;
 
 public class ReviveSubCommand {
     public ReviveSubCommand(CommandSender sender, String[] args) {
-        player((Player) sender, args);
+        if (sender instanceof Player)
+            player((Player) sender, args);
+        else if (sender instanceof ConsoleCommandSender)
+            console((ConsoleCommandSender) sender, args);
     }
 
     BedWars.ArenaUtil arenaUtil = Admin.getInstance().bw1058.getArenaUtil();
