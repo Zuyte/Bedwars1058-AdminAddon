@@ -21,20 +21,20 @@ public class AdminProxyTabComplete implements TabCompleter {
             }
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("forcejoin")) {
-                    List<String> arenaNames = new ArrayList<>();
-                    for (CachedArena cachedArena : ArenaManager.getArenas()) {
-                        arenaNames.add(cachedArena.getArenaName());
-                    }
-                    return arenaNames;
-                }
-        }
-            if (args.length == 3) {
-                if (args[0].equalsIgnoreCase("forcejoin")) {
                     List<String> playerNames = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         playerNames.add(player.getName());
                     }
                     return playerNames;
+                }
+            }
+            if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("forcejoin")) {
+                    List<String> arenaNames = new ArrayList<>();
+                    for (CachedArena cachedArena : ArenaManager.getArenas()) {
+                        arenaNames.add(cachedArena.getArenaName());
+                    }
+                    return arenaNames;
                 }
             }
         }
