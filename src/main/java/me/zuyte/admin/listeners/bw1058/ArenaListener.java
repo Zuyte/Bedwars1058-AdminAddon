@@ -42,6 +42,7 @@ public class ArenaListener implements Listener {
                 if (team.isBedDestroyed()) continue;
                 if (team.getBed().getBlock().getType() == Material.AIR) {
                     Admin.getInstance().getLogger().severe("Couldn't find bed block for team " + team.getName() + " in arena " + e.getArena().getArenaName() + ", revive and setbed command may raise errors!");
+                    continue;
                 }
                 Bed bedBlock = ((Bed) team.getBed().getBlock().getState().getData());
                 Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());

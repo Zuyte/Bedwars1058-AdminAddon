@@ -42,7 +42,7 @@ public class MenuListener implements Listener {
         }
 
         Cache_BW1058.setPlayerTeam(p, team);
-        p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.team.success", p).replace("{player}", p.getName()).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw1058.getPlayerLanguage(p))));
+        p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.team.success", p).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw1058.getPlayerLanguage(p))));
         p.closeInventory();
     }
 }
