@@ -38,6 +38,7 @@ public class Messages {
         yaml.addDefault(ADDON_PATH + "admin-message.team.full", "&cTeam is full");
         yaml.addDefault(ADDON_PATH + "admin-message.team.error-after-start", "&cCan't change player's team after the game has been started");
         yaml.addDefault(ADDON_PATH + "admin-message.revive.success", "&aSuccessfully revived {player}");
+        yaml.addDefault(ADDON_PATH + "admin-message.revive.error", "&cAn error occurred while reviving the player");
         yaml.addDefault(ADDON_PATH + "admin-message.nextevent.error", "&cEvent does not exist");
         yaml.addDefault(ADDON_PATH + "admin-message.skipevent.error", "&cYou are already at the last event");
 

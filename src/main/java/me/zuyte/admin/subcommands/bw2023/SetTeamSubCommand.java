@@ -74,7 +74,7 @@ public class SetTeamSubCommand {
                 if (playerArena.getTeam(player) != null) {
                     playerArena.getTeam(player).getMembers().remove(player);
                 }
-                setTeamGui(player, playerArena);
+                setTeamGui(p, player, playerArena);
             }
             return;
         }
@@ -121,14 +121,13 @@ public class SetTeamSubCommand {
                 if (playerArena.getTeam(player) != null) {
                     playerArena.getTeam(player).getMembers().remove(player);
                 }
-                setTeamGui(player, playerArena);
                 return;
             }
         }
         c.sendMessage(ChatColor.RED + "Usage: /bw setteam <player> <team>");
     }
 
-    private void setTeamGui(Player player, IArena arena) {
+    private void setTeamGui(Player p, Player player, IArena arena) {
         Inventory inventory = Bukkit.createInventory(player, 9, "Admin - Team Selector");
         for (int i = 0; i < arena.getTeams().size(); i++) {
             ITeam team = arena.getTeams().get(i);
@@ -142,6 +141,6 @@ public class SetTeamSubCommand {
             ItemStack newItemStack = Admin.getInstance().bw2023.getVersionSupport().addCustomData(itemStack, "bwa-team-selector");
             inventory.setItem(i, newItemStack);
         }
-        player.openInventory(inventory);
+        p.openInventory(inventory);
     }
 }

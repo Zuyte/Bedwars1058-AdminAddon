@@ -6,7 +6,7 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
-import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,34 +14,41 @@ import org.bukkit.material.Bed;
 
 public class ArenaListener implements Listener {
     private final Admin instance;
+
     public ArenaListener(Admin instance) {
         this.instance = instance;
     }
+
     @EventHandler
     public void onGameStateChange(GameStateChangeEvent e) {
         if (e.getNewState() == GameState.playing) {
             for (Player player : e.getArena().getPlayers()) {
+                ITeam playerTeam = e.getArena().getTeam(player);
                 if (Cache_BW1058.getPlayerTeam(player) == null) continue;
-                    for (ITeam team : e.getArena().getTeams()) {
-                        team.getMembers().remove(player);
-                        if (Cache_BW1058.getPlayerTeam(player) == team) {
-                            team.addPlayers(player);
-                        }
+                for (ITeam team : e.getArena().getTeams()) {
+                    team.getMembers().remove(player);
+                    if (Cache_BW1058.getPlayerTeam(player) == team) {
+                        team.addPlayers(player);
                     }
-                    Cache_BW1058.setPlayerTeam(player, e.getArena().getTeam(player));
+                }
+                Cache_BW1058.setPlayerTeam(player, playerTeam);
+                Cache_BW1058.setPlayerReviveTeam(player, playerTeam);
 
-                if (e.getArena().getTeam(player).getSize() == 0 || (e.getArena().getTeam(player).getMembers().contains(player) && e.getArena().getTeam(player).getMembers().size() == 1)) {
-                    e.getArena().getTeam(player).setBedDestroyed(true);
+                if (playerTeam.getSize() == 0 || (playerTeam.getMembers().contains(player) && playerTeam.getMembers().size() == 1)) {
+                    playerTeam.setBedDestroyed(true);
                 }
             }
             for (ITeam team : e.getArena().getTeams()) {
                 if (team.isBedDestroyed()) continue;
-                Bed bedBlock = ((Bed)team.getBed().getBlock().getState().getData());
+                if (team.getBed().getBlock().getType() == Material.AIR) {
+                    Admin.getInstance().getLogger().severe("Couldn't find bed block for team " + team.getName() + " in arena " + e.getArena().getArenaName() + ", revive and setbed command may raise errors!");
+                }
+                Bed bedBlock = ((Bed) team.getBed().getBlock().getState().getData());
                 Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
             }
         } else if (e.getNewState() == GameState.restarting) {
-                for (ITeam team : e.getArena().getTeams())
-                    Cache_BW1058.removeArenaBedsCache(team);
+            for (ITeam team : e.getArena().getTeams())
+                Cache_BW1058.removeArenaBedsCache(team);
         }
     }
 

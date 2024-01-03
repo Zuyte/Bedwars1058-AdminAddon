@@ -228,6 +228,7 @@ public class TrollSubCommand {
                         player.getWorld().strikeLightningEffect(playerLocation);
                         player.getWorld().strikeLightningEffect(playerLocation);
                         player.getWorld().strikeLightningEffect(playerLocation);
+                        Admin.getInstance().getLogger().warning("if you receive any error, make sure \"warnWhenSettingExcessiveVelocity\" is set to false in paper.yml\n https://i.imgur.com/PgsnAzn.png");
                         return;
                     }
                 }
@@ -545,6 +546,7 @@ public class TrollSubCommand {
                     player.getWorld().strikeLightningEffect(playerLocation);
                     player.getWorld().strikeLightningEffect(playerLocation);
                     player.getWorld().strikeLightningEffect(playerLocation);
+                    Admin.getInstance().getLogger().warning("if you receive any error, make sure \"warnWhenSettingExcessiveVelocity\" is set to false in paper.yml\n https://i.imgur.com/PgsnAzn.png");
                     return;
                 }
             }

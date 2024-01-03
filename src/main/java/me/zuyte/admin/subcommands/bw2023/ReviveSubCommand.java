@@ -47,20 +47,29 @@ public class ReviveSubCommand {
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW2023.getPlayerTeam(player);
-                    if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    ITeam playerTeam = Cache_BW2023.getPlayerReviveTeam(player);
+                    try {
+                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    } catch (Exception e) {
+                        p.sendMessage(TextUtils.getPlayerConfigStringBW2023("admin-message.revive.error", p));
+                        return;
+                    }
                     arena.getSpectators().remove(player);
                     arena.startReSpawnSession(player, 0);
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam);
                     p.sendMessage(TextUtils.getPlayerConfigStringBW2023("admin-message.revive.success", p).replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW2023.getPlayerTeam(player);
-                    if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    ITeam playerTeam = Cache_BW2023.getPlayerReviveTeam(player);
+                    try {
+                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    } catch (Exception e) {
+                        p.sendMessage(TextUtils.getPlayerConfigStringBW2023("admin-message.revive.error", p));
+                        return;
+                    }
                     arena.getSpectators().remove(player);
                     arena.startReSpawnSession(player, 0);
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
@@ -88,20 +97,29 @@ public class ReviveSubCommand {
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW2023.getPlayerTeam(player);
-                    if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    ITeam playerTeam = Cache_BW2023.getPlayerReviveTeam(player);
+                    try {
+                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    } catch (Exception e) {
+                        c.sendMessage(TextUtils.getDefaultConfigStringBW2023("admin-message.revive.error"));
+                        return;
+                    }
                     arena.getSpectators().remove(player);
                     arena.startReSpawnSession(player, 0);
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", c.getName()), 1, 6, 1);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache_BW2023.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam);
                     c.sendMessage(TextUtils.getDefaultConfigStringBW2023("admin-message.revive.success").replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW2023.getPlayerTeam(player);
-                    if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    ITeam playerTeam = Cache_BW2023.getPlayerReviveTeam(player);
+                    try {
+                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+                    } catch (Exception e) {
+                        c.sendMessage(TextUtils.getDefaultConfigStringBW2023("admin-message.revive.error"));
+                        return;
+                    }
                     arena.getSpectators().remove(player);
                     arena.startReSpawnSession(player, 0);
                     TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW2023("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW2023("player-message.revive.subtitle", player).replace("{player}", c.getName()), 1, 6, 1);
@@ -116,6 +134,9 @@ public class ReviveSubCommand {
 
     private void placeBed(ITeam playerTeam) {
         BlockFace face = Cache_BW2023.getArenaBedsCache(playerTeam);
+        if (face == null) {
+            face = BlockFace.SELF;
+        }
         BlockState bedFoot = playerTeam.getBed().getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
         bedFoot.setType(Material.BED_BLOCK);

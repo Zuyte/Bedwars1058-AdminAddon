@@ -79,7 +79,6 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    BlockFace targetFace = Cache_BW1058.getArenaBedsCache(playerTeam);
                     placeBed(playerTeam);
                     TextUtils.sendDefaultConfigStringBW1058("defaults.success", c);
                     return;
@@ -96,6 +95,9 @@ public class SetBedSubCommand {
 
     private void placeBed(ITeam playerTeam) {
         BlockFace face = Cache_BW1058.getArenaBedsCache(playerTeam);
+        if (face == null) {
+            face = BlockFace.SELF;
+        }
         BlockState bedFoot = playerTeam.getBed().getBlock().getState();
         BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
         bedFoot.setType(Material.BED_BLOCK);
