@@ -46,7 +46,7 @@ public class ReviveSubCommand {
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW1058.getPlayerReviveTeam(player);
+                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {
@@ -62,7 +62,8 @@ public class ReviveSubCommand {
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW1058.getPlayerReviveTeam(player);
+                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
+                    System.out.println(playerTeam+ "        ###########");
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {
@@ -96,7 +97,7 @@ public class ReviveSubCommand {
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW1058.getPlayerReviveTeam(player);
+                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {
@@ -112,7 +113,7 @@ public class ReviveSubCommand {
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = Cache_BW1058.getPlayerReviveTeam(player);
+                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {

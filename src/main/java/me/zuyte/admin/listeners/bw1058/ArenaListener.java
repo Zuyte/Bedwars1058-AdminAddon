@@ -31,8 +31,7 @@ public class ArenaListener implements Listener {
                         team.addPlayers(player);
                     }
                 }
-                Cache_BW1058.setPlayerTeam(player, playerTeam);
-                Cache_BW1058.setPlayerReviveTeam(player, playerTeam);
+                Cache_BW1058.setPlayerReviveTeam(player, playerTeam.getName());
 
                 if (playerTeam.getSize() == 0 || (playerTeam.getMembers().contains(player) && playerTeam.getMembers().size() == 1)) {
                     playerTeam.setBedDestroyed(true);

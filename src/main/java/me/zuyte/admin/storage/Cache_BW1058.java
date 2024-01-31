@@ -16,17 +16,12 @@ public class Cache_BW1058 {
     private static Map<Player, ItemStack> playerMLGCache = new HashMap<>();
     private static HashSet<Player> playerKaboomCache = new HashSet<>();
     private static Map<ITeam, BlockFace> arenaBedsCache = new HashMap<>();
-    private static Map<Player, ITeam> playerReviveTeamCache = new HashMap<>();
+    private static Map<Player, String> playerReviveTeamCache = new HashMap<>();
 
-    public static ITeam getPlayerReviveTeam(Player player) {
+    public static String getPlayerReviveTeam(Player player) {
         return playerReviveTeamCache.get(player);
     }
-
-    public static boolean containsPlayerReviveTeam(Player player) {
-        return playerReviveTeamCache.containsKey(player);
-    }
-
-    public static void setPlayerReviveTeam(Player player, ITeam team) {
+    public static void setPlayerReviveTeam(Player player, String team) {
         playerReviveTeamCache.put(player, team);
     }
 
