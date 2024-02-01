@@ -64,6 +64,9 @@ public class SetTeamSubCommand {
                     return;
                 }
                 Cache_BW1058.setPlayerTeam(player, playerTeam);
+                if (playerArena.getTeam(player) != null) {
+                    playerArena.getTeam(player).getMembers().remove(player);
+                }
                 playerTeam.addPlayers(player);
                 p.sendMessage(ChatColor.GREEN + "Successfully set " + player.getName() + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
                 return;
@@ -133,7 +136,7 @@ public class SetTeamSubCommand {
             lore.add(ChatColor.GRAY + "•" + ChatColor.GREEN + " Click to select team!");
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
-            ItemStack newItemStack = Admin.getInstance().bw1058.getVersionSupport().addCustomData(itemStack, "bwa-team-selector");
+            ItemStack newItemStack = Admin.getInstance().bw1058.getVersionSupport().addCustomData(itemStack, "bwa-team-selector-" + player.getName());
             inventory.setItem(i, newItemStack);
         }
         p.openInventory(inventory);

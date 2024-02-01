@@ -81,7 +81,7 @@
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
             <artifactId>bedwars-api</artifactId>
-            <version>22.3.4</version>
+            <version>23.12.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

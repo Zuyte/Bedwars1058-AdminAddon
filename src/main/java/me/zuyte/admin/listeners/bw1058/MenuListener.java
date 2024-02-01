@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
 import me.zuyte.admin.utils.TextUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +25,7 @@ public class MenuListener implements Listener {
             return;
         }
 
-        if (!Admin.getInstance().bw1058.getVersionSupport().isCustomBedWarsItem(e.getCurrentItem()) || !Admin.getInstance().bw1058.getVersionSupport().getCustomData(e.getCurrentItem()).equals("bwa-team-selector")) {
+        if (!Admin.getInstance().bw1058.getVersionSupport().isCustomBedWarsItem(e.getCurrentItem()) || !Admin.getInstance().bw1058.getVersionSupport().getCustomData(e.getCurrentItem()).startsWith("bwa-team-selector-")) {
             return;
         }
         e.setCancelled(true);
@@ -41,7 +42,19 @@ public class MenuListener implements Listener {
             return;
         }
 
-        Cache_BW1058.setPlayerTeam(p, team);
+        Player player = Bukkit.getPlayer(Admin.getInstance().bw1058.getVersionSupport().getCustomData(e.getCurrentItem()).replace("bwa-team-selector-", ""));
+
+        if (player == null) {
+            TextUtils.sendPlayerConfigStringBW1058("admin-message.player.not-found", p);
+            return;
+        }
+
+        if (arena.getTeam(player) != null) {
+            arena.getTeam(player).getMembers().remove(player);
+        }
+
+        team.addPlayers(player);
+        Cache_BW1058.setPlayerTeam(player, team);
         p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.team.set-success", p).replace("{team}", team.getColor().chat() + team.getDisplayName(instance.bw1058.getPlayerLanguage(p))));
         p.closeInventory();
     }

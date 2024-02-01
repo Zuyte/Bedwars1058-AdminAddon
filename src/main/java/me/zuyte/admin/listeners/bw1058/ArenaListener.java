@@ -34,17 +34,8 @@ public class ArenaListener implements Listener {
         }
 
         if (e.getNewState() == GameState.playing) {
-            for (Player player : e.getArena().getPlayers()) {
-                ITeam playerTeam = e.getArena().getTeam(player);
-                if (playerTeam == null) continue;
-                for (ITeam team : e.getArena().getTeams()) {
-                    team.getMembers().remove(player);
-                    if (Cache_BW1058.getPlayerTeam(player) == team) {
-                        team.addPlayers(player);
-                    }
-                }
-                Cache_BW1058.setPlayerReviveTeam(player, playerTeam.getName());
-            }
+            for (Player player : e.getArena().getPlayers())
+                Cache_BW1058.setPlayerReviveTeam(player, e.getArena().getTeam(player).getName());
         }
 
         if (e.getNewState() == GameState.restarting) {

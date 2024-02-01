@@ -9,8 +9,6 @@ import me.zuyte.admin.utils.ExtraUtils;
 import me.zuyte.admin.utils.TextUtils;
 import me.zuyte.admin.utils.TitleUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -47,45 +45,11 @@ public class ReviveSubCommand {
             ExtraUtils.debug(arena.getTeams().toString() + "#6");
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
-                    if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = null;
-                    String oldTeamName = Cache_BW1058.getPlayerReviveTeam(player);
-
-                    for (ITeam t : arena.getTeams()) {
-                        if (t.getName().equalsIgnoreCase(oldTeamName)) playerTeam = t;
-                    }
-                    try {
-                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
-                    } catch (Exception e) {
-                        p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.revive.error", p));
-                        return;
-                    }
-                    arena.getSpectators().remove(player);
-                    arena.startReSpawnSession(player, 0);
-                    TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
-                    playerTeam.setBedDestroyed(false);
-                    placeBed(playerTeam);
+                    if (revive(p, arena, player, true)) return;
                     p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.revive.success", p).replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
-                    if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = null;
-                    String oldTeamName = Cache_BW1058.getPlayerReviveTeam(player);
-
-                    for (ITeam t : arena.getTeams()) {
-                        if (t.getName().equalsIgnoreCase(oldTeamName)) playerTeam = t;
-                    }
-
-                    try {
-                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
-                    } catch (Exception e) {
-                        p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.revive.error", p));
-                        return;
-                    }
-                    arena.getSpectators().remove(player);
-                    arena.startReSpawnSession(player, 0);
-                    TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
-                    playerTeam.setBedDestroyed(true);
+                    if (revive(p, arena, player, false)) return;
                     p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.revive.success", p).replace("{player}", player.getName()));
                     return;
                 }
@@ -108,40 +72,43 @@ public class ReviveSubCommand {
             IArena arena = arenaUtil.getArenaByPlayer(player);
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
-                    if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
-                    try {
-                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
-                    } catch (Exception e) {
-                        c.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.revive.error"));
-                        return;
-                    }
-                    arena.getSpectators().remove(player);
-                    arena.startReSpawnSession(player, 0);
-                    TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", c.getName()), 1, 6, 1);
-                    playerTeam.setBedDestroyed(false);
-                    placeBed(playerTeam);
+                    revive(c, arena, player, true);
                     c.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.revive.success").replace("{player}", player.getName()));
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
-                    if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
-                    try {
-                        if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
-                    } catch (Exception e) {
-                        c.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.revive.error"));
-                        return;
-                    }
-                    arena.getSpectators().remove(player);
-                    arena.startReSpawnSession(player, 0);
-                    TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", c.getName()), 1, 6, 1);
-                    playerTeam.setBedDestroyed(true);
+                    revive(c, arena, player, false);
                     c.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.revive.success").replace("{player}", player.getName()));
                     return;
                 }
             }
         }
         TextUtils.sendDefaultConfigStringBW1058("usage.revive", c);
+    }
+
+    private boolean revive(CommandSender p, IArena arena, Player player, boolean isBed) {
+        if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
+        ITeam playerTeam = null;
+        String oldTeamName = Cache_BW1058.getPlayerReviveTeam(player);
+
+        for (ITeam t : arena.getTeams()) {
+            if (t.getName().equalsIgnoreCase(oldTeamName)) playerTeam = t;
+        }
+        try {
+            if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
+        } catch (Exception e) {
+            if (p instanceof Player)
+                p.sendMessage(TextUtils.getPlayerConfigStringBW1058("admin-message.revive.error", (Player) p));
+            else if (p instanceof ConsoleCommandSender)
+                p.sendMessage(TextUtils.getDefaultConfigStringBW1058("admin-message.revive.error"));
+            return true;
+        }
+        arena.getSpectators().remove(player);
+        arena.startReSpawnSession(player, 0);
+        TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
+        SidebarS
+        playerTeam.setBedDestroyed(!isBed);
+        if (isBed) placeBed(playerTeam);
+        return false;
     }
 
     private void placeBed(ITeam playerTeam) {
