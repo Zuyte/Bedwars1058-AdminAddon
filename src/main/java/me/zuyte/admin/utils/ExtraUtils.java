@@ -1,5 +1,6 @@
 package me.zuyte.admin.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,15 +30,20 @@ public class ExtraUtils {
         }
         return blocks;
     }
+
     public static void launchBlock(Block b) {
         FallingBlock fb;
         if (b == null) return;
         fb = b.getWorld().spawnFallingBlock(b.getLocation().add(0.0D, 1.0D, 0.0D), b.getType(), b.getData());
         fb.setDropItem(false);
         b.setType(Material.AIR);
-        float x = -1.0F + (float)(Math.random() * 3.0D);
+        float x = -1.0F + (float) (Math.random() * 3.0D);
         float y = 0.5F;
-        float z = -0.3F + (float)(Math.random() * 1.6D);
+        float z = -0.3F + (float) (Math.random() * 1.6D);
         fb.setVelocity(new Vector(x, y, z));
+    }
+
+    public static void debug(String message) {
+        Bukkit.getLogger().severe("[DEBUG] " + message);
     }
 }

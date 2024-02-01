@@ -33,7 +33,7 @@ public class Messages {
 
         // Admin Messages
         yaml.addDefault(ADDON_PATH + "admin-message.force-join", "&aForce joined {player} to {world}");
-        yaml.addDefault(ADDON_PATH + "admin-message.team.success", "&aSuccessfully set team to {team}");
+        yaml.addDefault(ADDON_PATH + "admin-message.team.set-success", "&aSuccessfully set team to {team}");
         yaml.addDefault(ADDON_PATH + "admin-message.team.not-found", "&cCan't find team");
         yaml.addDefault(ADDON_PATH + "admin-message.team.full", "&cTeam is full");
         yaml.addDefault(ADDON_PATH + "admin-message.team.error-after-start", "&cCan't change player's team after the game has been started");

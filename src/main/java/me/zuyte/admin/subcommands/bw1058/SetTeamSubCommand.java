@@ -31,7 +31,7 @@ public class SetTeamSubCommand {
 
     private void player(Player p, String[] args) {
         if (!p.hasPermission("bw.admin.setteam")) {
-            p.sendMessage(ChatColor.RED + "You dont have permission to use this command.");
+            p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
             return;
         }
         if (args.length > 1) {
@@ -40,25 +40,23 @@ public class SetTeamSubCommand {
                 p.sendMessage(ChatColor.RED + "Player not found");
                 return;
             }
-            if (arenaUtil.getArenaByPlayer(player) == null) {
+            IArena playerArena = arenaUtil.getArenaByPlayer(player);
+            if (playerArena == null) {
                 p.sendMessage(ChatColor.RED + "Player has not joined an arena");
                 return;
             }
-            if (arenaUtil.getArenaByPlayer(player).getStatus() == GameState.playing || arenaUtil.getArenaByPlayer(player).getStatus() == GameState.restarting) {
+            GameState arenaStatus = playerArena.getStatus();
+            if (arenaStatus == GameState.playing || arenaStatus == GameState.restarting) {
                 p.sendMessage(ChatColor.RED + "Can't change player team after the game has been started");
                 return;
             }
-            IArena playerArena = arenaUtil.getArenaByPlayer(player);
             if (args.length >= 3) {
-                String team = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
-                if (playerArena.getTeam(team) == null) {
+                String teamName = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
+                ITeam playerTeam = playerArena.getTeam(teamName);
+
+                if (playerTeam == null) {
                     p.sendMessage(ChatColor.RED + "Team not found");
                     return;
-                }
-                ITeam playerTeam = playerArena.getTeam(team);
-                if (playerArena.getTeam(player) != null) {
-                    Cache_BW1058.setPreviousPlayerTeam(player, playerArena.getTeam(player));
-                    playerArena.getTeam(player).getMembers().remove(player);
                 }
 
                 if (playerTeam.getMembers().size() == playerArena.getMaxInTeam()) {
@@ -67,7 +65,7 @@ public class SetTeamSubCommand {
                 }
                 Cache_BW1058.setPlayerTeam(player, playerTeam);
                 playerTeam.addPlayers(player);
-                p.sendMessage(ChatColor.GREEN + "Successfully set " + args[1] + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
+                p.sendMessage(ChatColor.GREEN + "Successfully set " + player.getName() + "'s Team to " + playerTeam.getColor().chat() + playerTeam.getName());
                 return;
             } else {
                 if (playerArena.getTeam(player) != null) {

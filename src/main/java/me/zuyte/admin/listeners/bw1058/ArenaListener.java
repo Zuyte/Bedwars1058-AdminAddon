@@ -21,22 +21,7 @@ public class ArenaListener implements Listener {
 
     @EventHandler
     public void onGameStateChange(GameStateChangeEvent e) {
-        if (e.getNewState() == GameState.playing) {
-            for (Player player : e.getArena().getPlayers()) {
-                ITeam playerTeam = e.getArena().getTeam(player);
-                if (Cache_BW1058.getPlayerTeam(player) == null) continue;
-                for (ITeam team : e.getArena().getTeams()) {
-                    team.getMembers().remove(player);
-                    if (Cache_BW1058.getPlayerTeam(player) == team) {
-                        team.addPlayers(player);
-                    }
-                }
-                Cache_BW1058.setPlayerReviveTeam(player, playerTeam.getName());
-
-                if (playerTeam.getSize() == 0 || (playerTeam.getMembers().contains(player) && playerTeam.getMembers().size() == 1)) {
-                    playerTeam.setBedDestroyed(true);
-                }
-            }
+        if (e.getNewState() == GameState.starting) {
             for (ITeam team : e.getArena().getTeams()) {
                 if (team.isBedDestroyed()) continue;
                 if (team.getBed().getBlock().getType() == Material.AIR) {
@@ -46,7 +31,23 @@ public class ArenaListener implements Listener {
                 Bed bedBlock = ((Bed) team.getBed().getBlock().getState().getData());
                 Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
             }
-        } else if (e.getNewState() == GameState.restarting) {
+        }
+
+        if (e.getNewState() == GameState.playing) {
+            for (Player player : e.getArena().getPlayers()) {
+                ITeam playerTeam = e.getArena().getTeam(player);
+                if (playerTeam == null) continue;
+                for (ITeam team : e.getArena().getTeams()) {
+                    team.getMembers().remove(player);
+                    if (Cache_BW1058.getPlayerTeam(player) == team) {
+                        team.addPlayers(player);
+                    }
+                }
+                Cache_BW1058.setPlayerReviveTeam(player, playerTeam.getName());
+            }
+        }
+
+        if (e.getNewState() == GameState.restarting) {
             for (ITeam team : e.getArena().getTeams())
                 Cache_BW1058.removeArenaBedsCache(team);
         }

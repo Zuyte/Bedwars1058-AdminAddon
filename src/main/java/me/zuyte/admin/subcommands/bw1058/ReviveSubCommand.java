@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.utils.ExtraUtils;
 import me.zuyte.admin.utils.TextUtils;
 import me.zuyte.admin.utils.TitleUtils;
 import org.bukkit.Bukkit;
@@ -43,10 +44,16 @@ public class ReviveSubCommand {
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
+            ExtraUtils.debug(arena.getTeams().toString() + "#6");
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
+                    ITeam playerTeam = null;
+                    String oldTeamName = Cache_BW1058.getPlayerReviveTeam(player);
+
+                    for (ITeam t : arena.getTeams()) {
+                        if (t.getName().equalsIgnoreCase(oldTeamName)) playerTeam = t;
+                    }
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {
@@ -62,8 +69,13 @@ public class ReviveSubCommand {
                     return;
                 } else if (args[2].equalsIgnoreCase("final")) {
                     if (!arena.getPlayers().contains(player)) arena.getPlayers().add(player);
-                    ITeam playerTeam = arena.getTeam(Cache_BW1058.getPlayerReviveTeam(player));
-                    System.out.println(playerTeam+ "        ###########");
+                    ITeam playerTeam = null;
+                    String oldTeamName = Cache_BW1058.getPlayerReviveTeam(player);
+
+                    for (ITeam t : arena.getTeams()) {
+                        if (t.getName().equalsIgnoreCase(oldTeamName)) playerTeam = t;
+                    }
+
                     try {
                         if (!playerTeam.getMembers().contains(player)) playerTeam.getMembers().add(player);
                     } catch (Exception e) {
