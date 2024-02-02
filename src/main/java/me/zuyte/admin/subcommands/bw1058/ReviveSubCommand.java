@@ -9,6 +9,7 @@ import me.zuyte.admin.utils.ExtraUtils;
 import me.zuyte.admin.utils.TextUtils;
 import me.zuyte.admin.utils.TitleUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -42,7 +43,6 @@ public class ReviveSubCommand {
                 return;
             }
             IArena arena = arenaUtil.getArenaByPlayer(player);
-            ExtraUtils.debug(arena.getTeams().toString() + "#6");
             if (args.length >= 3) {
                 if (args[2].equalsIgnoreCase("bed")) {
                     if (revive(p, arena, player, true)) return;
@@ -105,9 +105,10 @@ public class ReviveSubCommand {
         arena.getSpectators().remove(player);
         arena.startReSpawnSession(player, 0);
         TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
-        SidebarS
+        Admin.getInstance().bw1058.getScoreboardManager().giveSidebar(player, arena, true);
         playerTeam.setBedDestroyed(!isBed);
         if (isBed) placeBed(playerTeam);
+        player.setGameMode(GameMode.SURVIVAL);
         return false;
     }
 
