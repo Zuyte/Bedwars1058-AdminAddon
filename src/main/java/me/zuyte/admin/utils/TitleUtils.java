@@ -7,6 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class TitleUtils {
+    private static void sendTitleNew(Player player, String title, String subtitle, int fadein, int stay, int fadeout) {
+        try {
+            player.getClass().getMethod("sendTitle", String.class, String.class, int.class, int.class, int.class).invoke(player, title, subtitle, fadein, stay, fadeout);
+        } catch (Exception e) {
+            Bukkit.getServer().getLogger().severe("Couldn't find sendTitle method in Player class");
+        }
+    }
 
     public static void sendPacket(Player player, Object packet) {
 
@@ -41,6 +48,11 @@ public class TitleUtils {
 
         title = ChatColor.translateAlternateColorCodes('&', title);
         subtitle = ChatColor.translateAlternateColorCodes('&', subtitle);
+        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].split("_")[1];
+        if (Integer.parseInt(version) >= 12) {
+            sendTitleNew(player, title, subtitle, fadein, stay, fadeout);
+            return;
+        }
 
         Class<?> chatSerializer = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0];
         Class<?> chatComponent = getNMSClass("IChatBaseComponent");
