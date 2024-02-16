@@ -6,7 +6,10 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.utils.ExtraUtils;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,8 +31,12 @@ public class ArenaListener implements Listener {
                     Admin.getInstance().getLogger().severe("Couldn't find bed block for team " + team.getName() + " in arena " + e.getArena().getArenaName() + ", revive and setbed command may raise errors!");
                     continue;
                 }
-                Bed bedBlock = ((Bed) team.getBed().getBlock().getState().getData());
-                Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
+                if (ExtraUtils.MAIN_VERSION < 13) {
+                    Bed bedBlock = ((Bed) team.getBed().getBlock().getState().getData());
+                    Cache_BW1058.setArenaBedsCache(team, bedBlock.getFacing());
+                } else {
+                    Cache_BW1058.setArenaBedsCache(team, getBedFacing(team.getBed().getBlock()));
+                }
             }
         }
 
@@ -56,6 +63,17 @@ public class ArenaListener implements Listener {
         }
         if (Cache_BW1058.containsKaboomCache(e.getPlayer())) {
             Cache_BW1058.removeKaboomCache(e.getPlayer());
+        }
+    }
+
+    public BlockFace getBedFacing(Block bedBlock) {
+        try {
+            org.bukkit.block.data.type.Bed bedData = ((org.bukkit.block.data.type.Bed) bedBlock);
+            Object face = bedData.getClass().getMethod("getBlockData").invoke(bedData).getClass().getMethod("getFacing").invoke(bedBlock);
+            System.out.println(face);
+            return (BlockFace) face;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

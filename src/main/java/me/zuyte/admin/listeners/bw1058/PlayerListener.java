@@ -67,7 +67,7 @@ public class PlayerListener implements Listener {
                             Block clickedBlock = e.getClickedBlock();
                             List<Block> blocks = ExtraUtils.getRadiusBlocks(clickedBlock.getLocation(), 4, false);
                             for (Block block : blocks) {
-                                if (!block.getType().equals(Material.AIR) || !block.getType().equals(Material.BED_BLOCK)) {
+                                if (!block.getType().equals(Material.AIR) || !block.getType().name().endsWith("_BED")) {
                                     ExtraUtils.launchBlock(block);
                                 }
                                 e.getPlayer().setItemInHand(new ItemStack(Material.AIR));

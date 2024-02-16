@@ -107,24 +107,9 @@ public class ReviveSubCommand {
         TitleUtils.sendTitle(player, TextUtils.getPlayerConfigStringBW1058("player-message.revive.title", player), TextUtils.getPlayerConfigStringBW1058("player-message.revive.subtitle", player).replace("{player}", p.getName()), 1, 6, 1);
         Admin.getInstance().bw1058.getScoreboardManager().giveSidebar(player, arena, true);
         playerTeam.setBedDestroyed(!isBed);
-        if (isBed) placeBed(playerTeam);
+        if (isBed) ExtraUtils.placeBed_BW1058(playerTeam);
         player.setGameMode(GameMode.SURVIVAL);
         return false;
-    }
-
-    private void placeBed(ITeam playerTeam) {
-        BlockFace face = Cache_BW1058.getArenaBedsCache(playerTeam);
-        if (face == null) {
-            face = BlockFace.SELF;
-        }
-        BlockState bedFoot = playerTeam.getBed().getBlock().getState();
-        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-        bedFoot.setType(Material.BED_BLOCK);
-        bedHead.setType(Material.BED_BLOCK);
-        bedFoot.setRawData((byte) face.ordinal());
-        bedHead.setRawData((byte) (face.ordinal() + 8));
-        bedFoot.update(true, false);
-        bedHead.update(true, true);
     }
 
 }

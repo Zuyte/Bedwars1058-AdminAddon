@@ -48,8 +48,7 @@ public class TitleUtils {
 
         title = ChatColor.translateAlternateColorCodes('&', title);
         subtitle = ChatColor.translateAlternateColorCodes('&', subtitle);
-        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].split("_")[1];
-        if (Integer.parseInt(version) >= 12) {
+        if (ExtraUtils.MAIN_VERSION >= 12) {
             sendTitleNew(player, title, subtitle, fadein, stay, fadeout);
             return;
         }

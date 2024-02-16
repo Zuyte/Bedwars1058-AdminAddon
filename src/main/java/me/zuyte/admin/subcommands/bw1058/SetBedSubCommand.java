@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.utils.ExtraUtils;
 import me.zuyte.admin.utils.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,7 +50,7 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    placeBed(playerTeam);
+                    ExtraUtils.placeBed_BW1058(playerTeam);
                     TextUtils.sendPlayerConfigStringBW1058("defaults.success", p);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -79,7 +80,7 @@ public class SetBedSubCommand {
                 if (args[2].equalsIgnoreCase("true")) {
                     ITeam playerTeam = arena.getTeam(player);
                     playerTeam.setBedDestroyed(false);
-                    placeBed(playerTeam);
+                    ExtraUtils.placeBed_BW1058(playerTeam);
                     TextUtils.sendDefaultConfigStringBW1058("defaults.success", c);
                     return;
                 } else if (args[2].equalsIgnoreCase("false")) {
@@ -91,21 +92,6 @@ public class SetBedSubCommand {
             }
         }
         TextUtils.sendDefaultConfigStringBW1058("usage.setbed", c);
-    }
-
-    private void placeBed(ITeam playerTeam) {
-        BlockFace face = Cache_BW1058.getArenaBedsCache(playerTeam);
-        if (face == null) {
-            face = BlockFace.SELF;
-        }
-        BlockState bedFoot = playerTeam.getBed().getBlock().getState();
-        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-        bedFoot.setType(Material.BED_BLOCK);
-        bedHead.setType(Material.BED_BLOCK);
-        bedFoot.setRawData((byte) face.ordinal());
-        bedHead.setRawData((byte) (face.ordinal() + 8));
-        bedFoot.update(true, false);
-        bedHead.update(true, true);
     }
 }
 

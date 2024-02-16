@@ -6,6 +6,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import me.zuyte.admin.Admin;
 import me.zuyte.admin.storage.Cache_BW1058;
+import me.zuyte.admin.utils.ExtraUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -125,11 +126,15 @@ public class SetTeamSubCommand {
         c.sendMessage(ChatColor.RED + "Usage: /bw setteam <player> <team>");
     }
 
-    private void setTeamGui(Player p ,Player player, IArena arena) {
+    private void setTeamGui(Player p, Player player, IArena arena) {
         Inventory inventory = Bukkit.createInventory(player, 9, "Admin - Team Selector");
         for (int i = 0; i < arena.getTeams().size(); i++) {
             ITeam team = arena.getTeams().get(i);
-            ItemStack itemStack = new ItemStack(Material.WOOL, 1, team.getColor().dye().getWoolData());
+            ItemStack itemStack = null;
+            if (ExtraUtils.MAIN_VERSION < 13)
+                itemStack = new ItemStack(Material.WOOL, 1, team.getColor().dye().getWoolData());
+            else
+                itemStack = new ItemStack(team.getColor().woolMaterial(), 1);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(team.getColor().chat() + String.valueOf(ChatColor.BOLD) + team.getName());
             ArrayList<String> lore = new ArrayList<>();
