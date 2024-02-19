@@ -9,6 +9,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.util.Vector;
 
@@ -52,10 +54,10 @@ public class ExtraUtils {
     public static void placeBed_BW1058(ITeam playerTeam) {
         try {
             BlockFace face = Cache_BW1058.getArenaBedsCache(playerTeam);
-            if (face == null) {
-                face = BlockFace.SELF;
-            }
             if (ExtraUtils.MAIN_VERSION < 13) {
+                if (face == null) {
+                    face = BlockFace.SELF;
+                }
                 BlockState bedFoot = playerTeam.getBed().getBlock().getState();
                 BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
                 bedFoot.setType(Material.getMaterial("BED_BLOCK"));
@@ -65,22 +67,27 @@ public class ExtraUtils {
                 bedFoot.update(true, false);
                 bedHead.update(true, true);
             } else {
+                if (face == null) {
+                    face = BlockFace.EAST;
+                    System.out.println("Null facing");
+                }
                 Block bedBlock = playerTeam.getBed().getBlock();
-                Block relativeBlock = bedBlock.getRelative(face.getOppositeFace());
                 bedBlock.setType(playerTeam.getColor().bedMaterial());
+                Object bedHeadO = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
+                Bed bedHead = (Bed) bedHeadO;
+                bedHead.setPart(Bed.Part.HEAD);
+                bedHead.setFacing(face);
+                bedBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(bedBlock, bedHead);
+                Block relativeBlock = bedBlock.getRelative(face.getOppositeFace());
                 relativeBlock.setType(playerTeam.getColor().bedMaterial());
-                Object bedFoot = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
-                Object bedHead = bedBlock.getRelative(face.getOppositeFace()).getClass().getMethod("getBlockData").invoke(relativeBlock);
-                Class<?> bedPartEnum = Class.forName("org.bukkit.block.data.type.Bed$Part");
-                Object footEnum = Enum.valueOf((Class<Enum>) bedPartEnum, "FOOT");
-                Object headEnum = Enum.valueOf((Class<Enum>) bedPartEnum, "HEAD");
-                bedFoot.getClass().getMethod("setPart", BlockFace.class).invoke(bedFoot, footEnum);
-                bedHead.getClass().getMethod("setPart", BlockFace.class).invoke(bedFoot, headEnum);
-                bedBlock.getClass().getMethod("setBlockData", bedFoot.getClass()).invoke(bedBlock);
-                relativeBlock.getClass().getMethod("setBlockData", bedHead.getClass()).invoke(relativeBlock);
+                Object bedFootO = relativeBlock.getClass().getMethod("getBlockData").invoke(relativeBlock);
+                Bed bedFoot = (Bed) bedFootO;
+                bedFoot.setPart(Bed.Part.FOOT);
+                bedFoot.setFacing(face);
+                relativeBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(relativeBlock, bedFoot);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
