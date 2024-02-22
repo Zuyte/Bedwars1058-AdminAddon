@@ -70,20 +70,19 @@ public class ExtraUtils {
                 if (face == null) {
                     face = BlockFace.EAST;
                 }
-                face = face.getOppositeFace();
                 Block bedBlock = playerTeam.getBed().getBlock();
-                Block relativeBlock = bedBlock.getRelative(face.getOppositeFace());
+                Block relativeBlock = bedBlock.getRelative(face);
                 relativeBlock.setType(playerTeam.getColor().bedMaterial());
                 Object bedHeadO = relativeBlock.getClass().getMethod("getBlockData").invoke(relativeBlock);
                 Bed bedHead = (Bed) bedHeadO;
                 bedHead.setPart(Bed.Part.HEAD);
-                bedHead.setFacing(face.getOppositeFace());
+                bedHead.setFacing(face);
                 relativeBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(relativeBlock, bedHead);
                 bedBlock.setType(playerTeam.getColor().bedMaterial());
                 Object bedFootO = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
                 Bed bedFoot = (Bed) bedFootO;
                 bedFoot.setPart(Bed.Part.FOOT);
-                bedFoot.setFacing(face.getOppositeFace());
+                bedFoot.setFacing(face);
                 bedBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(bedBlock, bedFoot);
             }
         } catch (Exception e) {
