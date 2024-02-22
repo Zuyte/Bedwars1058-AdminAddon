@@ -71,7 +71,7 @@ public class ArenaListener implements Listener {
             Object blockData = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
             org.bukkit.block.data.type.Bed bed = (org.bukkit.block.data.type.Bed) blockData;
             if (bed.getPart() != org.bukkit.block.data.type.Bed.Part.HEAD) {
-                Block bedBlock1 = bedBlock.getRelative(bed.getFacing().getOppositeFace());
+                Block bedBlock1 = bedBlock.getRelative(bed.getFacing());
                 Object blockData1 = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock1);
                 org.bukkit.block.data.type.Bed bed1 = (org.bukkit.block.data.type.Bed) blockData1;
                 return bed1.getFacing();

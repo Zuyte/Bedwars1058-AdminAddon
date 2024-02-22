@@ -69,22 +69,22 @@ public class ExtraUtils {
             } else {
                 if (face == null) {
                     face = BlockFace.EAST;
-                    System.out.println("Null facing");
                 }
+                face = face.getOppositeFace();
                 Block bedBlock = playerTeam.getBed().getBlock();
-                bedBlock.setType(playerTeam.getColor().bedMaterial());
-                Object bedHeadO = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
-                Bed bedHead = (Bed) bedHeadO;
-                bedHead.setPart(Bed.Part.HEAD);
-                bedHead.setFacing(face);
-                bedBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(bedBlock, bedHead);
                 Block relativeBlock = bedBlock.getRelative(face.getOppositeFace());
                 relativeBlock.setType(playerTeam.getColor().bedMaterial());
-                Object bedFootO = relativeBlock.getClass().getMethod("getBlockData").invoke(relativeBlock);
+                Object bedHeadO = relativeBlock.getClass().getMethod("getBlockData").invoke(relativeBlock);
+                Bed bedHead = (Bed) bedHeadO;
+                bedHead.setPart(Bed.Part.HEAD);
+                bedHead.setFacing(face.getOppositeFace());
+                relativeBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(relativeBlock, bedHead);
+                bedBlock.setType(playerTeam.getColor().bedMaterial());
+                Object bedFootO = bedBlock.getClass().getMethod("getBlockData").invoke(bedBlock);
                 Bed bedFoot = (Bed) bedFootO;
                 bedFoot.setPart(Bed.Part.FOOT);
-                bedFoot.setFacing(face);
-                relativeBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(relativeBlock, bedFoot);
+                bedFoot.setFacing(face.getOppositeFace());
+                bedBlock.getClass().getMethod("setBlockData", BlockData.class).invoke(bedBlock, bedFoot);
             }
         } catch (Exception e) {
             e.printStackTrace();
